@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Boozr</title>
-        <script src="jquery.min.js"></script>
-    </head>
-    <body>  
-        Boozr is not ready yet!<br>
-        <a href="http://54.201.49.162/app/Views/UserCreation.html">Click here to create an account</a><br>
-        <a href="http://54.201.49.162/app/Views/BeerReview.html">Click here to view beer reviews</a><br>
-        <a href="http://54.201.49.162/app/Views/CreateBeerReview.html">Click here to create a beer review</a><br>
-        <a href="http://54.201.49.162/app/Views/Beer.html">Click here to search beers by id</a><br>
-        <a href="http://54.201.49.162/app/Views/BeerSearch.html">Click here to search keywords</a><br>
-        <br>
-        <button onclick="sendRequest('user/testApi', null, false, {message: 'Hello World'});">Run testApi Function</button>
+<head>
+    <title>Boozr</title>
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+Boozr is not ready yet!<br>
+<a href="http://54.201.49.162/app/Views/UserCreation.html">Click here to create an account</a><br>
+<a href="http://54.201.49.162/app/Views/BeerReview.html">Click here to search beer reviews</a><br>
+<a href="http://54.201.49.162/app/Views/CreateBeerReview.html">Click here to create a beer review</a><br>
+<a href="http://54.201.49.162/app/Views/Beer.html">Click here to search beers by id</a><br>
+<a href="http://54.201.49.162/app/Views/BeerSearch.html">Click here to search keywords</a><br>
+<br>
+<button onclick="sendRequest('user/testApi', null, false, {message: 'Hello World'});">Run testApi Function</button>
 
-        <div id="results">API Results</div>
-    </body>
+<div id="results">API Results</div>
+</body>
 
-    <script>
-        function sendRequest(method, callback, passSessionId, params) {
-        if(typeof(params) === "undefined") params = {};
-        if(passSessionId) params.sessionId = jobifyApi.sessionId;
+<script>
+    function sendRequest(method, callback, passSessionId, params) {
+        if (typeof(params) === "undefined") params = {};
+        if (passSessionId) params.sessionId = jobifyApi.sessionId;
 
         $.ajax({
             url: "http://54.200.14.217/?/" + method,
             type: "post",
             data: params,
             dataType: "json",
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
                 $("#results").append("</br>" + JSON.stringify(data));
-                if(callback) callback(data);
+                if (callback) callback(data);
             },
-            error: function(jqXHR, textStatus, errorThrown) {
-                
+            error: function (jqXHR, textStatus, errorThrown) {
+
             }
         });
     }
-    </script>
+</script>
 </html>
