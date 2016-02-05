@@ -5,12 +5,12 @@
     <script src="jquery.min.js"></script>
 </head>
 <body>
-    Boozr Beer Reviews<br>
-    Search: <input type="text" id="searchToken">
-    <br>
-    <button onclick="sendRequest(null, false);">Get beer reviews</button>
+Boozr Beer Reviews<br>
+Search: <input type="text" id="searchToken">
+<br>
+<button onclick="sendRequest(null, false);">Get beer reviews</button>
 
-    <div id="results">API Results</div>
+<div id="results">API Results</div>
 </body>
 </html>
 <script>
@@ -39,7 +39,7 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    if(data.details){
+                    if (data.details) {
                         $("#results").append("</br> Beer Reviews: " + data.details);
                     } else {
                         if (data.idMatches) {

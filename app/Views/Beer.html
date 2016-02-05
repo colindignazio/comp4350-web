@@ -40,12 +40,17 @@ Beer Id:
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    for (var i = 0; i < data.results.length; i++) {
-                        $("#results").append("</br> Beer id: " + data.results[i].Beer_id +
-                                "</br> Name: " + data.results[i].Name +
-                                "</br> Brewery: " + data.results[i].Brewery +
-                                "</br> Type: " + data.results[i].Type +
-                                "</br>Alcohol by Volume: $" + data.results[i].Alcohol_By_Volume + "</br>");
+                    if (data.details) {
+                        $("#results").append("</br> Beer: " + data.details);
+                    }
+                    else {
+                        for (var i = 0; i < data.results.length; i++) {
+                            $("#results").append("</br> Beer id: " + data.results[i].Beer_id +
+                                    "</br> Name: " + data.results[i].Name +
+                                    "</br> Brewery: " + data.results[i].Brewery +
+                                    "</br> Type: " + data.results[i].Type +
+                                    "</br>Alcohol by Volume: $" + data.results[i].Alcohol_By_Volume + "</br>");
+                        }
                     }
                     if (callback) callback(data);
                 },

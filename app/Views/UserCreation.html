@@ -12,7 +12,9 @@ Username:
 Password:
 <input type="text" id="password"><br>
 Email:
-<input type="text" id="email"> <button onclick="sendVerificationEmail(null, false);">Send Confirmation Email</button><br>
+<input type="text" id="email">
+<button onclick="sendVerificationEmail(null, false);">Send Confirmation Email</button>
+<br>
 Location:
 <input type="text" id="location"><br>
 <button onclick="sendRequest('Users/createAccount', null, false);">Create Account</button>
@@ -23,8 +25,7 @@ Location:
 </html>
 <script>
     function sendVerificationEmail(callback, passSessionId) {
-        if(/.*@.*\..*/.test(document.getElementById('email').value))
-        {
+        if (/.*@.*\..*/.test(document.getElementById('email').value)) {
             var params = {
                 email: document.getElementById('email').value
             };
@@ -49,16 +50,14 @@ Location:
                 }
             });
         }
-        else
-        {
+        else {
             window.alert("The entered email must be valid.");
         }
     }
     function sendRequest(callback, passSessionId) {
         var method = 'User/createAccount';
         if (document.getElementById('username').value && document.getElementById('password').value &&
-                document.getElementById('email').value)
-        {
+                document.getElementById('email').value) {
             if (/.*@.*\..*/.test(document.getElementById('email').value)) {
                 var params = {
                     userName: document.getElementById('username').value,
@@ -87,13 +86,11 @@ Location:
                     }
                 });
             }
-            else
-            {
+            else {
                 window.alert("The entered email must be valid.");
             }
         }
-        else
-        {
+        else {
             window.alert("One or more required fields are missing: username, password or email.");
         }
     }
