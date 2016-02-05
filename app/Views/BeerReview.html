@@ -39,10 +39,26 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                        if(data.beerMatches) {
+                    if(data.details){
+                        $("#results").append("</br> Beer Reviews: " + data.details);
+                    } else {
+                        if (data.idMatches) {
+                            $("#results").append("<h2>Beer Review Id Matches:</h2>");
+                            for (i in data.beerMatches) {
+                                $("#results").append("</br> review id: " + data.idMatches[i].id +
+                                        "</br> beer id: " + data.idMatches[i].beer_id +
+                                        "</br> user id: " + data.idMatches[i].user_id +
+                                        "</br> store id: " + data.idMatches[i].store_id +
+                                        "</br> stars: " + data.idMatches[i].stars +
+                                        "</br> review: " + data.idMatches[i].review +
+                                        "</br>price: $" + data.idMatches[i].price + "</br>");
+                            }
+                        }
+
+                        if (data.beerMatches) {
                             $("#results").append("<h2>Beer Id Matches:</h2>");
-                            for(i in data.beerMatches) {
-                                $("#results").append("</br> review id: " + data.results[i].id +
+                            for (i in data.beerMatches) {
+                                $("#results").append("</br> review id: " + data.beerMatches[i].id +
                                         "</br> beer id: " + data.beerMatches[i].beer_id +
                                         "</br> user id: " + data.beerMatches[i].user_id +
                                         "</br> store id: " + data.beerMatches[i].store_id +
@@ -51,28 +67,29 @@
                                         "</br>price: $" + data.beerMatches[i].price + "</br>");
                             }
                         }
-                    if(data.userMatches) {
-                        $("#results").append("<h2>User Id Matches:</h2>");
-                        for(i in data.userMatches) {
-                            $("#results").append("</br> review id: " + data.results[i].id +
-                                    "</br> beer id: " + data.userMatches[i].beer_id +
-                                    "</br> user id: " + data.userMatches[i].user_id +
-                                    "</br> store id: " + data.userMatches[i].store_id +
-                                    "</br> stars: " + data.userMatches[i].stars +
-                                    "</br> review: " + data.userMatches[i].review +
-                                    "</br>price: $" + data.userMatches[i].price + "</br>");
+                        if (data.userMatches) {
+                            $("#results").append("<h2>User Id Matches:</h2>");
+                            for (i in data.userMatches) {
+                                $("#results").append("</br> review id: " + data.userMatches[i].id +
+                                        "</br> beer id: " + data.userMatches[i].beer_id +
+                                        "</br> user id: " + data.userMatches[i].user_id +
+                                        "</br> store id: " + data.userMatches[i].store_id +
+                                        "</br> stars: " + data.userMatches[i].stars +
+                                        "</br> review: " + data.userMatches[i].review +
+                                        "</br>price: $" + data.userMatches[i].price + "</br>");
+                            }
                         }
-                    }
-                    if(data.starMatches) {
-                        $("#results").append("<h2>Stars Matches:</h2>");
-                        for(i in data.starMatches) {
-                            $("#results").append("</br> review id: " + data.results[i].id +
-                                    "</br> beer id: " + data.starMatches[i].beer_id +
-                                    "</br> user id: " + data.starMatches[i].user_id +
-                                    "</br> store id: " + data.starMatches[i].store_id +
-                                    "</br> stars: " + data.starMatches[i].stars +
-                                    "</br> review: " + data.starMatches[i].review +
-                                    "</br>price: $" + data.starMatches[i].price + "</br>");
+                        if (data.starMatches) {
+                            $("#results").append("<h2>Stars Matches:</h2>");
+                            for (i in data.starMatches) {
+                                $("#results").append("</br> review id: " + data.starMatches[i].id +
+                                        "</br> beer id: " + data.starMatches[i].beer_id +
+                                        "</br> user id: " + data.starMatches[i].user_id +
+                                        "</br> store id: " + data.starMatches[i].store_id +
+                                        "</br> stars: " + data.starMatches[i].stars +
+                                        "</br> review: " + data.starMatches[i].review +
+                                        "</br>price: $" + data.starMatches[i].price + "</br>");
+                            }
                         }
                     }
                     if (callback) callback(data);
