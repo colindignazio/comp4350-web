@@ -6,8 +6,7 @@
 </head>
 <body>
     Boozr Beer Reviews<br>
-    Review Id:
-    <input type="text" id="reviewId">
+    Search: <input type="text" id="searchToken">
     <br>
     <button onclick="sendRequest(null, false);">Get beer reviews</button>
 
@@ -17,14 +16,14 @@
 <script>
     function sendRequest(callback, passSessionId) {
         var method = 'BeerReview/all';
-        if (isNaN(document.getElementById('reviewId').value)) {
+        if (isNaN(document.getElementById('searchToken').value)) {
             window.alert("The field review id must be an integer");
         }
         else {
-            if (document.getElementById('reviewId').value != "") {
-                method = 'BeerReview/searchById';
+            if (document.getElementById('searchToken').value != "") {
+                method = 'BeerReview/search';
                 var params = {
-                    review_id: document.getElementById('reviewId').value,
+                    searchToken: document.getElementById('searchToken').value
                 };
             }
             if (typeof(params) === "undefined") {
@@ -40,14 +39,41 @@
                 dataType: "json",
                 success: function (data) {
                     console.log(data);
-                    for (var i = 0; i < data.results.length; i++) {
-                        $("#results").append("</br> review id: " + data.results[i].id +
-                                "</br> beer id: " + data.results[i].beer_id +
-                                "</br> user id: " + data.results[i].user_id +
-                                "</br> store id: " + data.results[i].store_id +
-                                "</br> stars: " + data.results[i].stars +
-                                "</br> review: " + data.results[i].review +
-                                "</br>price: $" + data.results[i].price + "</br>");
+                        if(data.beerMatches) {
+                            $("#results").append("<h2>Beer Id Matches:</h2>");
+                            for(i in data.beerMatches) {
+                                $("#results").append("</br> review id: " + data.results[i].id +
+                                        "</br> beer id: " + data.beerMatches[i].beer_id +
+                                        "</br> user id: " + data.beerMatches[i].user_id +
+                                        "</br> store id: " + data.beerMatches[i].store_id +
+                                        "</br> stars: " + data.beerMatches[i].stars +
+                                        "</br> review: " + data.beerMatches[i].review +
+                                        "</br>price: $" + data.beerMatches[i].price + "</br>");
+                            }
+                        }
+                    if(data.userMatches) {
+                        $("#results").append("<h2>User Id Matches:</h2>");
+                        for(i in data.userMatches) {
+                            $("#results").append("</br> review id: " + data.results[i].id +
+                                    "</br> beer id: " + data.userMatches[i].beer_id +
+                                    "</br> user id: " + data.userMatches[i].user_id +
+                                    "</br> store id: " + data.userMatches[i].store_id +
+                                    "</br> stars: " + data.userMatches[i].stars +
+                                    "</br> review: " + data.userMatches[i].review +
+                                    "</br>price: $" + data.userMatches[i].price + "</br>");
+                        }
+                    }
+                    if(data.starMatches) {
+                        $("#results").append("<h2>Stars Matches:</h2>");
+                        for(i in data.starMatches) {
+                            $("#results").append("</br> review id: " + data.results[i].id +
+                                    "</br> beer id: " + data.starMatches[i].beer_id +
+                                    "</br> user id: " + data.starMatches[i].user_id +
+                                    "</br> store id: " + data.starMatches[i].store_id +
+                                    "</br> stars: " + data.starMatches[i].stars +
+                                    "</br> review: " + data.starMatches[i].review +
+                                    "</br>price: $" + data.starMatches[i].price + "</br>");
+                        }
                     }
                     if (callback) callback(data);
                 },
