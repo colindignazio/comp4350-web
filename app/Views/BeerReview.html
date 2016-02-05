@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Boozr Beer Reviews </title>
-    <script src="jquery.min.js"></script>
+    <script src="../Controllers/jquery.min.js"></script>
 </head>
 <body>
 Boozr Beer Reviews<br>
@@ -13,91 +13,5 @@ Search: <input type="text" id="searchToken">
 <div id="results">API Results</div>
 </body>
 </html>
-<script>
-    function sendRequest(callback, passSessionId) {
-        var method = 'BeerReview/all';
-        if (isNaN(document.getElementById('searchToken').value)) {
-            window.alert("The search string must be an integer(search is based on Id's)");
-        }
-        else {
-            if (document.getElementById('searchToken').value != "") {
-                method = 'BeerReview/search';
-                var params = {
-                    searchToken: document.getElementById('searchToken').value
-                };
-            }
-            if (typeof(params) === "undefined") {
-                params = {};
-            }
-
-            if (passSessionId) params.sessionId = jobifyApi.sessionId;
-
-            $.ajax({
-                url: "http://54.200.14.217/?/" + method,
-                type: "post",
-                data: params,
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    if (data.details) {
-                        $("#results").append("</br> Beer Reviews: " + data.details);
-                    } else {
-                        if (data.idMatches) {
-                            $("#results").append("<h2>Beer Review Id Matches:</h2>");
-                            for (i in data.beerMatches) {
-                                $("#results").append("</br> review id: " + data.idMatches[i].id +
-                                        "</br> beer id: " + data.idMatches[i].beer_id +
-                                        "</br> user id: " + data.idMatches[i].user_id +
-                                        "</br> store id: " + data.idMatches[i].store_id +
-                                        "</br> stars: " + data.idMatches[i].stars +
-                                        "</br> review: " + data.idMatches[i].review +
-                                        "</br>price: $" + data.idMatches[i].price + "</br>");
-                            }
-                        }
-
-                        if (data.beerMatches) {
-                            $("#results").append("<h2>Beer Id Matches:</h2>");
-                            for (i in data.beerMatches) {
-                                $("#results").append("</br> review id: " + data.beerMatches[i].id +
-                                        "</br> beer id: " + data.beerMatches[i].beer_id +
-                                        "</br> user id: " + data.beerMatches[i].user_id +
-                                        "</br> store id: " + data.beerMatches[i].store_id +
-                                        "</br> stars: " + data.beerMatches[i].stars +
-                                        "</br> review: " + data.beerMatches[i].review +
-                                        "</br>price: $" + data.beerMatches[i].price + "</br>");
-                            }
-                        }
-                        if (data.userMatches) {
-                            $("#results").append("<h2>User Id Matches:</h2>");
-                            for (i in data.userMatches) {
-                                $("#results").append("</br> review id: " + data.userMatches[i].id +
-                                        "</br> beer id: " + data.userMatches[i].beer_id +
-                                        "</br> user id: " + data.userMatches[i].user_id +
-                                        "</br> store id: " + data.userMatches[i].store_id +
-                                        "</br> stars: " + data.userMatches[i].stars +
-                                        "</br> review: " + data.userMatches[i].review +
-                                        "</br>price: $" + data.userMatches[i].price + "</br>");
-                            }
-                        }
-                        if (data.starMatches) {
-                            $("#results").append("<h2>Stars Matches:</h2>");
-                            for (i in data.starMatches) {
-                                $("#results").append("</br> review id: " + data.starMatches[i].id +
-                                        "</br> beer id: " + data.starMatches[i].beer_id +
-                                        "</br> user id: " + data.starMatches[i].user_id +
-                                        "</br> store id: " + data.starMatches[i].store_id +
-                                        "</br> stars: " + data.starMatches[i].stars +
-                                        "</br> review: " + data.starMatches[i].review +
-                                        "</br>price: $" + data.starMatches[i].price + "</br>");
-                            }
-                        }
-                    }
-                    if (callback) callback(data);
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-
-                }
-            });
-        }
-    }
-</script>
+<script src="../Controllers/jquery.min.js"></script>
+<script src="../Controllers/beerReviewController.js"></script>
