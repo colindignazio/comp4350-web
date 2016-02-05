@@ -17,7 +17,7 @@ Search: <input type="text" id="searchToken">
     function sendRequest(callback, passSessionId) {
         var method = 'BeerReview/all';
         if (isNaN(document.getElementById('searchToken').value)) {
-            window.alert("The field review id must be an integer");
+            window.alert("The search string must be an integer(search is based on Id's)");
         }
         else {
             if (document.getElementById('searchToken').value != "") {
