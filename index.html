@@ -1,40 +1,68 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
-    <title>Boozr</title>
-    <script src="jquery.min.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Boozr</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="jquery.min.js"></script>
+  <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="app/app.css">
+  <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script src="app/bower_components/angular/angular.js"></script>
+  <script src="app/bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="app/Controllers/userController.js"></script>
+  <script src="app/Controllers/loginController.js"></script>
+  <script src="app/components/version/version.js"></script>
+  <script src="app/components/version/version-directive.js"></script>
+  <script src="app/components/version/interpolate-filter.js"></script>
+  <script src="app/bower_components/js.cookie.js"></script>
 </head>
 <body>
-Boozr is not ready yet!<br>
-<a href="http://54.201.49.162/app/Views/UserCreation.html">Click here to create an account</a><br>
-<a href="http://54.201.49.162/app/Views/BeerReview.html">Click here to search beer reviews</a><br>
-<a href="http://54.201.49.162/app/Views/CreateBeerReview.html">Click here to create a beer review</a><br>
-<a href="http://54.201.49.162/app/Views/Beer.html">Click here to search beers by id</a><br>
-<a href="http://54.201.49.162/app/Views/BeerSearch.html">Click here to search keywords</a><br>
-<br>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/Home">Boozr</a>
+    </div>
 
-<div id="results">API Results</div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul id="navbarLeftItems" class="nav navbar-nav">
+        <li><a href="#/Create-Account">Sign Up</a></li>
+        <li><a href="#/Login">Sign In</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search Beverages">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div ng-view></div>
+</div>
+
 </body>
-
-<script>
-    function sendRequest(method, callback, passSessionId, params) {
-        if (typeof(params) === "undefined") params = {};
-        if (passSessionId) params.sessionId = jobifyApi.sessionId;
-
-        $.ajax({
-            url: "http://54.200.14.217/?/" + method,
-            type: "post",
-            data: params,
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                $("#results").append("</br>" + JSON.stringify(data));
-                if (callback) callback(data);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-
-            }
-        });
-    }
-</script>
 </html>

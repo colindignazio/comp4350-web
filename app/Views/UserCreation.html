@@ -1,27 +1,32 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Boozr User Creation</title>
-    <script src="../Controllers/jquery.min.js"></script>
-</head>
-<body>
-Boozr Users<br>
-
-Username:
-<input type="text" id="username"><br>
-Password:
-<input type="text" id="password"><br>
-Email:
-<input type="text" id="email">
-<button onclick="sendVerificationEmail(null, false);">Send Confirmation Email</button>
-<br>
-Location:
-<input type="text" id="location"><br>
-<button onclick="sendRequest('Users/createAccount', null, false);">Create Account</button>
-
-
-<div id="results">API Results</div>
-</body>
-</html>
-<script src="../Controllers/jquery.min.js"></script>
-<script src="../Controllers/userController.js"></script>
+<div ng-controller="CreateAccountController as accountCreate">
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h1>Create Account</h1>
+            <br></br>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+            <form ng-submit="accountCreate.createAccount()">
+                <div class="form-group">
+                    <label for="username">Username: </label>
+                    <input ng-model="accountCreate.usernameText" type="text" class="form-control" id="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password: </label>
+                    <input ng-model="accountCreate.passwordText" type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input ng-model="accountCreate.emailText" type="email" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location: </label>
+                    <input ng-model="accountCreate.locationText" type="text" class="form-control" id="location" placeholder="Location">
+                </div>
+                
+                <button type="submit" class="btn btn-default">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
