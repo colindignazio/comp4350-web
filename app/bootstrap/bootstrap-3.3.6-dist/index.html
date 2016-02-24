@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="images/boozr.png">
+
+    <title>Boozr</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+
+    <script src="Controllers/beerController.js"></script>
+
+  </head>
+
+  <body>
+
+    <!--nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Boozr</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div>
+      </div>
+    </nav-->
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <div class="col-lg-6">
+          <h1>Boozr Search</h1>
+          <div id="search-input-group" class="input-group input-group-lg">
+            <input type="text" id = "keyword-search" class="form-control" placeholder="Search by name, brewery or beer type">
+
+          </div><!-- /input-group -->
+          <br>
+           <div class = "input-group input-group-sm">
+             <span class = "input-group-addon">Brewery</span>
+             <input type = "text" class = "form-control" >
+             <span class = "input-group-addon">Type</span>
+             <input type = "text" class = "form-control" >
+          </div>
+          <br>
+          <div class = "input-group input-group-sm">
+             <span class = "input-group-addon">Min Price</span>
+             <input type = "text" class = "form-control" >
+             <span class = "input-group-addon">Max Price</span>
+             <input type = "text" class = "form-control" >
+          </div>
+          <br>
+          <div class = "input-group input-group-sm">
+             <span class = "input-group-addon">Min Rating</span>
+             <input type = "text" class = "form-control" >
+             <span class = "input-group-addon">Max Rating</span>
+             <input type = "text" class = "form-control" >
+          </div>
+          <br>
+          <div id = "alcohol-content-input-group" class = "input-group input-group-sm">
+             <span class = "input-group-addon">Alcohol Content</span>
+             <input type = "text" class = "form-control" >
+          </div>
+          <br>
+          <p><a class="btn btn-primary btn-lg" href="#" role="button" onclick="sendBeerSearchRequest(null, false);">Get Beers</a></p>
+        </div><!-- /.col-lg-6 -->
+      </div><!-- /container -->
+    </div><!-- /jumbotron -->
+
+    <div class="container">
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">Results</div>
+            <div class="panel-body">
+            </div>
+
+            <!-- Table -->
+            <table class="table">
+              <thead>
+                <th>Name</th>
+                <th>Brewery</th>
+                <th>Type</th>
+                <th>Alc</th>
+                <th>Rating</th>
+                <th>Price</th>
+              </thead>
+              <tbody id="results-table-body">
+                <tr>
+                  <td>Test Lager</td>
+                  <td>Test Breweries</td>
+                  <td>Lager</td>
+                  <td>5%</td>
+                  <td>4.2</td>
+                  <td>$4.50</td>
+                </tr>
+                <tr>
+                  <td>Test Pale Ale</td>
+                  <td>Test Brewing </td>
+                  <td>Ale</td>
+                  <td>5%</td>
+                  <td>3.5</td>
+                  <td>$3.50</td>
+                </tr>
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; 2016 Comp 4350 Software Engineering Project Group</p>
+      </footer>
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
