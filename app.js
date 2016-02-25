@@ -84,7 +84,6 @@ angular.module('myApp', [
               responseType: 'json'
         }).then(function mySucces(data) {
               if(200 == data.data.status) {
-                  console.log(data);
                   $rootScope.loggedIn = false;
                   $rootScope.sessionId = null;
                   $rootScope.user = null;
@@ -104,6 +103,11 @@ angular.module('myApp', [
 
 .controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
   function($scope, $routeParams, $rootScope, $http, API_URL) {
+
+      var userController = this;
+
+      userController.reviews = [];
+
       $http({
               method: 'POST',
               url: API_URL + 'user/getUser',
@@ -115,6 +119,7 @@ angular.module('myApp', [
                     $scope.usernameText = data.data.user.User_name;
                     $scope.emailText = data.data.user.User_email;
                     $scope.locationText = data.data.user.User_location;
+                    userController.reviews = data.data.user.reviews;
                     if(data.data.sessionId) {
                         $rootScope.sessionId = data.data.sessionId;
                         Cookies.set('session', data.data.sessionId, { expires: 3 });
@@ -170,7 +175,6 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
     }).then(function mySucces(data) {
-            console.log(data);
             $scope.usernameText = data.data.user.User_name;
             $scope.emailText = data.data.user.User_email;
             $scope.locationText = data.data.user.User_location;
@@ -184,7 +188,6 @@ angular.module('myApp', [
     });
 
     userAccount.saveAccount = function() {
-        console.log($rootScope.user);
     };
 }])
  
