@@ -196,6 +196,9 @@ angular.module('myApp', [
 .controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
   function($scope, $rootScope, $http, API_URL, $location) {
     var search = this;
+    search.sortType     = 'Name'; // set the default sort type
+    search.sortReverse  = false;  // set the default sort order
+    search.searchBeer   = '';     // set the default search/filter term
 
     search.userResults = [];
     search.beerResults = [];
@@ -209,38 +212,6 @@ angular.module('myApp', [
       return isInList;
     }
 
-    function sortByName(list){
-      list.sort(function(a, b) {
-        var x = a.Name.toLowerCase(), y = b.Name.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
-    function sortByBrewery(list){
-      list.sort(function(a, b) {
-        var x = a.Brewery.toLowerCase(), y = b.Brewery.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
-    function sortByType(list){
-      list.sort(function(a, b) {
-        var x = a.Type.toLowerCase(), y = b.Type.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
-    function sortByAlc(list){
-      list.sort(function(a, b) {
-        var x = a.Alcohol_By_Volume.toLowerCase(), y = b.Alcohol_By_Volume.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
  
     search.search = function() {
       if(search.searchType=='user') {
@@ -271,9 +242,9 @@ angular.module('myApp', [
                 responseType: 'json'
           }).then(function mySucces(data) {
             if(200 == data.data.status) {
-              var results = data.data.searchResults;
-              sortByName(results);
-              search.beerResults = results;
+              search.beerResults = data.data.searchResults;
+              } else {
+                      window.alert('Error: ' + data.data.details);
               }
           }, function myError(response) {
 
