@@ -72,7 +72,7 @@ angular.module('myApp', [
 .controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope',
     function($scope, $routeParams, $http, API_URL, $rootScope) {
       var mainController = this;
-      var searchString ="";
+      $rootScope.searchString ="";
 
       mainController.logout = function() {
         $http({
