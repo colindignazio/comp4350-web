@@ -212,38 +212,6 @@ angular.module('myApp', [
       return isInList;
     }
 
-    function sortByName(list){
-      list.sort(function(a, b) {
-        var x = a.Name.toLowerCase(), y = b.Name.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
-    function sortByBrewery(list){
-      list.sort(function(a, b) {
-        var x = a.Brewery.toLowerCase(), y = b.Brewery.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
-    function sortByType(list){
-      list.sort(function(a, b) {
-        var x = a.Type.toLowerCase(), y = b.Type.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
-    function sortByAlc(list){
-      list.sort(function(a, b) {
-        var x = a.Alcohol_By_Volume.toLowerCase(), y = b.Alcohol_By_Volume.toLowerCase();
-        return x < y ? -1 : x > y ? 1 : 0;
-      });
-      list.sort();
-      return list;
-    }
  
     search.search = function() {
       if(search.searchType=='user') {
@@ -276,7 +244,7 @@ angular.module('myApp', [
             if(200 == data.data.status) {
 
               var results = data.data.searchResults;
-              sortByName(results);
+              
 
               search.beerResults = results;
               }
