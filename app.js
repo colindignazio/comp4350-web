@@ -96,10 +96,6 @@ angular.module('myApp', [
 
         });
     };
-
-    mainController.search = function(){
-            $location.path("#/BeerSearch");
-    };
 }])
 
 .controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',

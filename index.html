@@ -53,12 +53,12 @@
         <li ng-show="loggedIn"><a href="#/User-Account">{{user.User_name}}</a></li>
         <li ng-show="loggedIn"><a href="#/Home" ng-click="mainController.logout();">Logout</a></li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-            <form class="navbar-form navbar-left" role="search">
+      <<ul class="nav navbar-nav navbar-right">
+            <form class="navbar-form navbar-left" role="search" action="#/Search">
             <div class="form-group">
-                <input type="text" ng-model="searchString" class="form-control" placeholder="Search Beverages">
+                <input type="text" ng-model="$rootScope.searchString" class="form-control" placeholder="Search Beverages">
             </div>
-            <button type="submit" ng-click="mainController.search();" class="btn btn-default">Submit</button>
+            <button type="submit" ng-click="" class="btn btn-default">Search</button>
         </form>
       </ul>
     </div>
