@@ -1,0 +1,26 @@
+<div ng-controller="TopDrinksController as topDrinks">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Brewery</th>
+            <th>Type</th>
+            <th>Alc</th>
+            <th>Rating</th>
+            <th>Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="results in topDrinks.topResults">
+            <td>{{results.Name}}</td>
+            <td>{{results.Brewery}}</td>
+            <td>{{results.Type}}</td>
+            <td>{{results.Alcohol_By_Volume}}</td>
+            <td>{{results.Rating}}</td>
+            <td>{{results.Price}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

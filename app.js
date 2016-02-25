@@ -36,6 +36,10 @@ angular.module('myApp', [
             templateUrl: 'app/Views/UserAccount.html',
             controller: 'UserAccountController'
         }).
+        when('/TopDrinks', {
+            templateUrl: 'app/Views/TopDrinks.html',
+            controller: 'topDrinksController'
+        }).
         otherwise({redirectTo: '/Home'});
 }])
 
@@ -320,4 +324,31 @@ angular.module('myApp', [
 
     });
     };
-}]);
+}])
+
+.controller('TopDrinksController', ['$scope', '$rootScope', '$http', 'API_URL',
+    function($scope, $rootScope, $http, API_URL) {
+        var topDrinks = this;
+        topDrinks.results = [];
+        topDrinks.getTopDrinks = function(){
+            $http({
+                method: 'POST',
+                url: API_URL + 'beer/getTopDrinks',
+                data: $.param(),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+            }).then(function mySucces(data) {
+                if(200 == data.data.status) {
+                    topDrinks.results = data.data.results;
+                } else {
+                    window.alert('Error: ' + data.data.details);
+                }
+
+            }, function myError(response) {
+
+            });
+        };
+        angular.element(document).ready(function () {
+            topDrinks.getTopDrinks();
+        });
+    }]);
