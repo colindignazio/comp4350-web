@@ -190,6 +190,49 @@ angular.module('myApp', [
 .controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL',
   function($scope, $rootScope, $http, API_URL) {
     var search = this;
+    
+    function inListCheck(list, item){
+      var isInList = false;
+      for(var j in list){
+        if(list[j].Beer_id == item.Beer_id)
+          isInList = true;
+      }
+      return isInList;
+    }
+
+    function sortByName(list){
+      list.sort(function(a, b) {
+        var x = a.Name.toLowerCase(), y = b.Name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    function sortByBrewery(list){
+      list.sort(function(a, b) {
+        var x = a.Brewery.toLowerCase(), y = b.Brewery.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    function sortByType(list){
+      list.sort(function(a, b) {
+        var x = a.Type.toLowerCase(), y = b.Type.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    function sortByAlc(list){
+      list.sort(function(a, b) {
+        var x = a.Alcohol_By_Volume.toLowerCase(), y = b.Alcohol_By_Volume.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    
  
     search.search = function() {
       $http({
@@ -199,11 +242,54 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
     }).then(function mySucces(data) {
-            if(200 == data.data.status) {
-                
-            } else {
-                window.alert('Error: ' + data.data.details);
-            }
+
+      console.log(data);
+      if(200 == data.data.status) {
+        var results = [];
+        if (data.data.typeMatches)
+          for (var i in data.data.typeMatches)
+            if(!inListCheck(results, data.data.typeMatches[i]))
+              results.push(data.data.typeMatches[i]);
+       if (data.data.breweryMatches)
+          for (var i in data.data.breweryMatches)
+             if(!inListCheck(results, data.data.breweryMatches[i]))
+              results.push(data.data.breweryMatches[i]);
+       if (data.data.nameMatches)
+          for (var i in data.data.nameMatches)
+             if(!inListCheck(results, data.data.nameMatches[i]))
+              results.push(data.data.nameMatches[i]);
+
+        sortByName(results);
+
+        $("#results-table-body").empty();
+        for (var i in results) {
+        $("#results-table-body").append("<tr>"+
+          "<td>" + results[i].Name +"</td>" +
+          "<td>" + results[i].Brewery +"</td>" +
+          "<td>" + results[i].Type +"</td>" +
+          "<td>" + results[i].Alcohol_By_Volume +"</td>" +
+          "<td>5</td>" +
+          "<td>$4.50</td>"+
+          "</tr>");
+      }
+         /*if (data.data.nameMatches) {
+              for (i in data.data.nameMatches) {
+                  $("#results-table-body").append("<tr>"+
+                      "<td style='background-color: lightblue'>" + data.data.nameMatches[i].Name +"</td>" +
+                      "<td>" + data.data.nameMatches[i].Brewery +"</td>" +
+                      "<td>" + data.data.nameMatches[i].Type +"</td>" +
+                      "<td>" + data.data.nameMatches[i].Alcohol_By_Volume +"</td>" +
+                      "<td>5</td>" +
+                      "<td>$4.50</td>"+
+                      "</tr>")
+              }
+          }*/
+
+
+
+      } else {
+          window.alert('Error: ' + data.data.details);
+      }
           
     }, function myError(response) {
 

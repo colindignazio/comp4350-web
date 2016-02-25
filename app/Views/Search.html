@@ -11,10 +11,41 @@
                 <div class="form-group">
                     <label for="searchToken">Search: </label>
                     <input ng-model="search.searchToken" type="text" class="form-control" id="searchToken" placeholder="Name, Brewery or Beer Type...">
+                    
                 </div>
                 <button type="submit" class="btn btn-danger">Search</button>
             </form>
         </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+         <div class="col-xs-6 col-xs-offset-3">
+         <br>
+          <div class="panel panel-default">
+            <!-- Default panel contents -->
+
+            <div  class="panel-heading">Results</div>
+            <table  id="results-table" class="table">
+                <thead id="results-table-head">
+                    <th>Name</th>
+                    <th>Brewery</th>
+                    <th>Type</th>
+                    <th>Alc</th>
+                    <th>Rating</th>
+                    <th>Price</th>
+                </thead>
+                <tbody id="results-table-body">
+                    
+                </tbody>
+             
+            </table>
+            
+          </div>
+        </div>
+      </div><!--/row-->
+   
     </div>
+    
+
 </div>
 
