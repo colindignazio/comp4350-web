@@ -5,7 +5,7 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.version'
 ])
-.constant('API_URL', 'http://localhost/Boozr/API/?/')
+.constant('API_URL', 'http://54.200.14.217/?/')
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.
         when('/Search', {
@@ -70,8 +70,8 @@ angular.module('myApp', [
   }
 })
 
-.controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope',
-    function($scope, $routeParams, $http, API_URL, $rootScope) {
+.controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope', '$location',
+    function($scope, $routeParams, $http, API_URL, $rootScope, $location) {
       var mainController = this;
       $rootScope.searchString ="";
 
@@ -95,6 +95,10 @@ angular.module('myApp', [
         }, function myError(response) {
 
         });
+    };
+
+    mainController.search = function(){
+            $location.path("/BeerSearch");
     };
 }])
 
