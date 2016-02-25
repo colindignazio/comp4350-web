@@ -48,21 +48,44 @@
                   </tr>
                 </tbody>
               </table>
-              
-              <div class="alert alert-info">
-                <p>Sort Type: {{ search.sortType }}</p>
-                <p>Sort Reverse: {{ search.sortReverse }}</p>
-                <p>Search Query: {{ search.searchBeer }}</p>
-              </div>
 
               <table class="table table-striped" ng-show="search.searchType=='beer'">
-                <thead>
+                <thead class="thead-defualt">
                   <tr>
-
-                    <th>Name</th>
-                    <th>Brewery</th>
-                    <th>Type</th>
-                    <th>Alc</th>
+                    <th>
+                      <a href="#Search" ng-click="sortType = 'Name'; sortReverse = !sortReverse ">
+                        Name 
+                        <span ng-show="sortType == 'Name' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'Name' && sortReverse" class="fa fa-caret-up"></span>
+                        <span ng-show="sortType != 'Name'" class="fa fa-sort"></span>
+                        
+                      </a>
+                    </th>
+                    <th>
+                      <a href="#Search" ng-click="sortType = 'Brewery'; sortReverse = !sortReverse ">
+                        Brewery 
+                        <span ng-show="sortType == 'Brewery' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'Brewery' && sortReverse" class="fa fa-caret-up"></span>
+                        <span ng-show="sortType != 'Brewery'" class="fa fa-sort"></span>
+                      </a>
+                    </th>
+                    <th>
+                      <a href="#Search" ng-click="sortType = 'Type'; sortReverse = !sortReverse ">
+                        Type 
+                        <span ng-show="sortType == 'Type' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'Type' && sortReverse" class="fa fa-caret-up"></span>
+                        <span ng-show="sortType != 'Type'" class="fa fa-sort"></span>
+                      </a>
+                    </th>
+                    
+                    <th>
+                      <a href="#Search" ng-click="sortType = 'Alcohol_By_Volume'; sortReverse = !sortReverse ">
+                        Alc 
+                        <span ng-show="sortType == 'Alcohol_By_Volume' && !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'Alcohol_By_Volume' && sortReverse" class="fa fa-caret-up"></span>
+                        <span ng-show="sortType != 'Alcohol_By_Volume'" class="fa fa-sort"></span>
+                      </a>
+                    </th>
                     <th>Rating</th>
                     <th>Price</th>
 
@@ -70,7 +93,7 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse">
-                  
+
                     <td>{{results.Name}}</td>
                     <td>{{results.Brewery}}</td>
                     <td>{{results.Type}}</td>
