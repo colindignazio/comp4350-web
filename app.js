@@ -79,7 +79,6 @@ angular.module('myApp', [
                   $rootScope.sessionId = null;
                   $rootScope.user = null;
                   Cookies.remove('session');
-                  $('#navbarLeftItems').html('<li><a href="#/Create-Account">Sign Up</a></li><li><a href="#/Login">Sign In</a></li>');
               } else {
                   window.alert('Error Logging Out');
               }
@@ -131,7 +130,6 @@ angular.module('myApp', [
           responseType: 'json'
     }).then(function mySucces(data) {
             if(200 == data.data.status) {
-                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + accountCreate.usernameText + '</a></li><li><a href ng-click="mainController.logout();"">Logout</a></li>');
                 $rootScope.user = data.data.user;
                 $rootScope.loggedIn = true;
             } else {
@@ -190,7 +188,6 @@ angular.module('myApp', [
           responseType: 'json'
     }).then(function mySucces(data) {
             if(200 == data.data.status) {
-                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + login.usernameText + '</a></li><li><a href ng-click="mainController.logout();"">Logout</a></li>');
                 $rootScope.user = data.data.user;
                 $rootScope.loggedIn = true;
             } else {
