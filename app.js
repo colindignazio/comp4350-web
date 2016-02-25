@@ -5,7 +5,7 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.version'
 ])
-.constant('API_URL', 'http://localhost/Boozr/API/?/')
+.constant('API_URL', 'http://54.200.14.217/?/')
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.
         when('/Search', {
