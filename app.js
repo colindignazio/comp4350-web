@@ -271,20 +271,7 @@ angular.module('myApp', [
                 responseType: 'json'
           }).then(function mySucces(data) {
             if(200 == data.data.status) {
-              var results = [];
-              if (data.data.typeMatches)
-                for (var i in data.data.typeMatches)
-                  if(!inListCheck(results, data.data.typeMatches[i]))
-                    results.push(data.data.typeMatches[i]);
-             if (data.data.breweryMatches)
-                for (var i in data.data.breweryMatches)
-                   if(!inListCheck(results, data.data.breweryMatches[i]))
-                    results.push(data.data.breweryMatches[i]);
-             if (data.data.nameMatches)
-                for (var i in data.data.nameMatches)
-                   if(!inListCheck(results, data.data.nameMatches[i]))
-                    results.push(data.data.nameMatches[i]);
-
+              var results = data.data.searchResults;
               sortByName(results);
               search.beerResults = results;
               }
