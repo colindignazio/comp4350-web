@@ -38,7 +38,7 @@ angular.module('myApp', [
         }).
         when('/TopDrinks', {
             templateUrl: 'app/Views/TopDrinks.html',
-            controller: 'topDrinksController'
+            controller: 'TopDrinksController'
         }).
         otherwise({redirectTo: '/Home'});
 }])
