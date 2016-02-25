@@ -31,6 +31,7 @@
             <table class="table table-striped" ng-show="search.searchType=='user'">
                 <thead >
                   <tr>
+
                     <th>Username</th>
                     <th>Location</th>
                     <th>Email</th>
@@ -47,9 +48,17 @@
                   </tr>
                 </tbody>
               </table>
+              
+              <div class="alert alert-info">
+                <p>Sort Type: {{ search.sortType }}</p>
+                <p>Sort Reverse: {{ search.sortReverse }}</p>
+                <p>Search Query: {{ search.searchBeer }}</p>
+              </div>
+
               <table class="table table-striped" ng-show="search.searchType=='beer'">
                 <thead>
                   <tr>
+
                     <th>Name</th>
                     <th>Brewery</th>
                     <th>Type</th>
@@ -60,7 +69,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="results in search.beerResults">
+                  <tr ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse">
+                  
                     <td>{{results.Name}}</td>
                     <td>{{results.Brewery}}</td>
                     <td>{{results.Type}}</td>

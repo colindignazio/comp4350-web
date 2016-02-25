@@ -38,7 +38,7 @@ angular.module('myApp', [
         }).
         when('/TopDrinks', {
             templateUrl: 'app/Views/TopDrinks.html',
-            controller: 'topDrinksController'
+            controller: 'TopDrinksController'
         }).
         otherwise({redirectTo: '/Home'});
 }])
@@ -196,6 +196,9 @@ angular.module('myApp', [
 .controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
   function($scope, $rootScope, $http, API_URL, $location) {
     var search = this;
+    search.sortType     = 'Name'; // set the default sort type
+    search.sortReverse  = false;  // set the default sort order
+    search.searchBeer   = '';     // set the default search/filter term
 
     search.userResults = [];
     search.beerResults = [];
@@ -271,8 +274,10 @@ angular.module('myApp', [
                 responseType: 'json'
           }).then(function mySucces(data) {
             if(200 == data.data.status) {
+
               var results = data.data.searchResults;
               sortByName(results);
+
               search.beerResults = results;
               }
           }, function myError(response) {
