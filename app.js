@@ -70,8 +70,8 @@ angular.module('myApp', [
   }
 })
 
-.controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope',
-    function($scope, $routeParams, $http, API_URL, $rootScope) {
+.controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope', '$location',
+    function($scope, $routeParams, $http, API_URL, $rootScope, $location) {
       var mainController = this;
       $rootScope.searchString ="";
 
@@ -98,7 +98,7 @@ angular.module('myApp', [
     };
 
     mainController.search = function(){
-            $location.path("#/BeerSearch");
+            $location.path("/BeerSearch");
     };
 }])
 
