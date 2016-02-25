@@ -15,6 +15,10 @@ config(['$routeProvider', function($routeProvider) {
             templateUrl: 'app/Views/Login.html',
             controller: 'LoginController'
         }).
+        when('/BeerSearch', {
+            templateUrl: 'app/Views/BeerSearch.html',
+            controller: 'beerController'
+        }).
         when('/Home', {
             templateUrl: 'app/Views/Home.html',
             controller: ''
@@ -55,7 +59,7 @@ config(['$routeProvider', function($routeProvider) {
     }
 
   };
- 
+
   var prevId = Cookies.get('session');
   if(prevId) {
       $rootScope.sessionId = prevId;
