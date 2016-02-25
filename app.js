@@ -66,6 +66,7 @@ angular.module('myApp', [
         });
   } else {
       $rootScope.loggedIn = false;
+      $rootScope.user = null;
   }
 })
 
