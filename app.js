@@ -196,6 +196,9 @@ angular.module('myApp', [
 .controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
   function($scope, $rootScope, $http, API_URL, $location) {
     var search = this;
+    search.sortType     = 'Name'; // set the default sort type
+    search.sortReverse  = false;  // set the default sort order
+    search.searchBeer   = '';     // set the default search/filter term
 
     search.userResults = [];
     search.beerResults = [];
@@ -285,7 +288,7 @@ angular.module('myApp', [
                    if(!inListCheck(results, data.data.nameMatches[i]))
                     results.push(data.data.nameMatches[i]);
 
-              sortByName(results);
+              
               search.beerResults = results;
               }
           }, function myError(response) {
