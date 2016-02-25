@@ -47,7 +47,6 @@ angular.module('myApp', [
   var prevId = Cookies.get('session');
   if(prevId) {
       $rootScope.sessionId = prevId;
-      console.log("prevId exists");
       $http({
               method: 'POST',
               url: API_URL + 'user/getUserDetails',
@@ -196,6 +195,48 @@ angular.module('myApp', [
 
     search.userResults = [];
     search.beerResults = [];
+
+    function inListCheck(list, item){
+      var isInList = false;
+      for(var j in list){
+        if(list[j].Beer_id == item.Beer_id)
+          isInList = true;
+      }
+      return isInList;
+    }
+
+    function sortByName(list){
+      list.sort(function(a, b) {
+        var x = a.Name.toLowerCase(), y = b.Name.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    function sortByBrewery(list){
+      list.sort(function(a, b) {
+        var x = a.Brewery.toLowerCase(), y = b.Brewery.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    function sortByType(list){
+      list.sort(function(a, b) {
+        var x = a.Type.toLowerCase(), y = b.Type.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
+    function sortByAlc(list){
+      list.sort(function(a, b) {
+        var x = a.Alcohol_By_Volume.toLowerCase(), y = b.Alcohol_By_Volume.toLowerCase();
+        return x < y ? -1 : x > y ? 1 : 0;
+      });
+      list.sort();
+      return list;
+    }
  
     search.search = function() {
       if(search.searchType=='user') {
@@ -225,12 +266,24 @@ angular.module('myApp', [
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 responseType: 'json'
           }).then(function mySucces(data) {
-                  if(200 == data.data.status) {
-                      
-                  } else {
-                      window.alert('Error: ' + data.data.details);
-                  }
-                
+            if(200 == data.data.status) {
+              var results = [];
+              if (data.data.typeMatches)
+                for (var i in data.data.typeMatches)
+                  if(!inListCheck(results, data.data.typeMatches[i]))
+                    results.push(data.data.typeMatches[i]);
+             if (data.data.breweryMatches)
+                for (var i in data.data.breweryMatches)
+                   if(!inListCheck(results, data.data.breweryMatches[i]))
+                    results.push(data.data.breweryMatches[i]);
+             if (data.data.nameMatches)
+                for (var i in data.data.nameMatches)
+                   if(!inListCheck(results, data.data.nameMatches[i]))
+                    results.push(data.data.nameMatches[i]);
+
+              sortByName(results);
+              search.beerResults = results;
+              }
           }, function myError(response) {
 
           });

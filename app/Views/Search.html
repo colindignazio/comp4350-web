@@ -51,16 +51,22 @@
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Alcohol By Volume</th>
-                    <th>Other Column</th>
+                    <th>Brewery</th>
+                    <th>Type</th>
+                    <th>Alc</th>
+                    <th>Rating</th>
+                    <th>Price</th>
+
                   </tr>
                 </thead>
                 <tbody>
                   <tr ng-repeat="results in search.beerResults">
-                    <td>{{results.User_name}}</td>
-                    <td>{{results.User_location}}</td>
-                    <td>{{results.User_email}}</td>
-                    <td>Coming Soon</td>
+                    <td>{{results.Name}}</td>
+                    <td>{{results.Brewery}}</td>
+                    <td>{{results.Type}}</td>
+                    <td>{{results.Alcohol_By_Volume}}</td>
+                    <td>{{results.Rating}}</td>
+                    <td>{{results.Price}}</td>
                   </tr>
                 </tbody>
               </table>
