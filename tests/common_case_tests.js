@@ -14,6 +14,7 @@ module.exports = {
       .waitForElementVisible('#userAccount', 3000)
       .click('#userAccount')
       .waitForElementVisible('#username', 3000)
+      .pause(1000)
       .assert.value('#username', "Mitchell")
       .end(); 
   },
