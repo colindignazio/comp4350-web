@@ -8,6 +8,10 @@ angular.module('myApp', [
 .constant('API_URL', 'http://localhost/Boozr/API/?/')
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.
+        when('/Search', {
+            templateUrl: 'app/Views/Search.html',
+            controller: ''
+        }).
         when('/Create-Account', {
             templateUrl: 'app/Views/UserCreation.html',
             controller: 'CreateAccountController'
