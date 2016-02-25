@@ -36,28 +36,6 @@ angular.module('myApp', [
 
 .run(function($rootScope, $http, API_URL) {
 
-  $rootScope.logout = function() {
-    console.log("A");
-        $http({
-              method: 'POST',
-              url: API_URL + 'user/logout',
-              data: $.param({sessionId: $rootScope.sessionId}),
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-              responseType: 'json'
-        }).then(function mySucces(data) {
-              if(200 == data.data.status) {
-                  console.log(data);
-                  $rootScope.sessionId = null;
-                  Cookies.remove('session');
-                  $('#navbarLeftItems').html('<li><a href="#/Create-Account">Sign Up</a></li><li><a href="#/Login">Sign In</a></li>');
-              } else {
-                  window.alert('Error Logging Out');
-              }
-        }, function myError(response) {
-            
-        });  
-    };
-
   var prevId = Cookies.get('session');
   if(prevId) {
       $rootScope.sessionId = prevId;
@@ -69,24 +47,50 @@ angular.module('myApp', [
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               responseType: 'json'
         }).then(function mySucces(data) {
-                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + data.data.user.User_name + '</a></li><li><a href ng-click="logout();"">Logout</a></li>');
                 if(data.data.sessionId) {
                     $rootScope.sessionId = data.data.sessionId;
                     Cookies.set('session', data.data.sessionId, { expires: 3 });
                 }
+                $rootScope.loggedIn = true;
+                $rootScope.user = data.data.user;
         }, function myError(response) {
             
         });
   } else {
-
+      $rootScope.loggedIn = false;
   }
 })
 
-.controller('HomeController', ['$scope', function($scope) {
+.controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope',
+    function($scope, $routeParams, $http, API_URL, $rootScope) {
+      var mainController = this;
+
+      mainController.logout = function() {
+        $http({
+              method: 'POST',
+              url: API_URL + 'user/logout',
+              data: $.param({sessionId: $rootScope.sessionId}),
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              responseType: 'json'
+        }).then(function mySucces(data) {
+              if(200 == data.data.status) {
+                  console.log(data);
+                  $rootScope.loggedIn = false;
+                  $rootScope.sessionId = null;
+                  $rootScope.user = null;
+                  Cookies.remove('session');
+                  $('#navbarLeftItems').html('<li><a href="#/Create-Account">Sign Up</a></li><li><a href="#/Login">Sign In</a></li>');
+              } else {
+                  window.alert('Error Logging Out');
+              }
+        }, function myError(response) {
+            
+        });  
+    };
 }])
 
-.controller('UserController', ['$scope', '$routeParams', '$http', 'API_URL',
-  function($scope, $routeParams, $http, API_URL) {
+.controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
+  function($scope, $routeParams, $rootScope, $http, API_URL) {
       $http({
               method: 'POST',
               url: API_URL + 'user/getUser',
@@ -110,7 +114,7 @@ angular.module('myApp', [
         });
   }])
 
-.controller('CreateAccountController', ['$scope', '$routeParams', '$http', 'API_URL',
+.controller('CreateAccountController', ['$scope', '$rootScope', '$http', 'API_URL',
   function($scope, $rootScope, $http, API_URL) {
     var accountCreate = this;
  
@@ -127,8 +131,9 @@ angular.module('myApp', [
           responseType: 'json'
     }).then(function mySucces(data) {
             if(200 == data.data.status) {
-                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + accountCreate.usernameText + '</a></li><li><a href ng-click="logout();"">Logout</a></li>');
+                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + accountCreate.usernameText + '</a></li><li><a href ng-click="mainController.logout();"">Logout</a></li>');
                 $rootScope.user = data.data.user;
+                $rootScope.loggedIn = true;
             } else {
                 window.alert('Error: ' + data.data.details);
             }
@@ -142,7 +147,7 @@ angular.module('myApp', [
     };
 }])
 
-.controller('UserAccountController', ['$scope', '$routeParams', '$http', 'API_URL',
+.controller('UserAccountController', ['$scope', '$rootScope', '$http', 'API_URL',
   function($scope, $rootScope, $http, API_URL) {
     var userAccount = this;
 
@@ -157,6 +162,7 @@ angular.module('myApp', [
             $scope.usernameText = data.data.user.User_name;
             $scope.emailText = data.data.user.User_email;
             $scope.locationText = data.data.user.User_location;
+            $rootScope.user = data.data.user;
             if(data.data.sessionId) {
                 $rootScope.sessionId = data.data.sessionId;
                 Cookies.set('session', data.data.sessionId, { expires: 3 });
@@ -171,7 +177,7 @@ angular.module('myApp', [
 }])
  
  
-.controller('LoginController', ['$scope', '$routeParams', '$http', 'API_URL',
+.controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL',
   function($scope, $rootScope, $http, API_URL) {
     var login = this;
  
@@ -184,8 +190,9 @@ angular.module('myApp', [
           responseType: 'json'
     }).then(function mySucces(data) {
             if(200 == data.data.status) {
-                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + login.usernameText + '</a></li><li><a href ng-click="logout();"">Logout</a></li>');
+                $('#navbarLeftItems').html('<li><a href="#/User-Account">' + login.usernameText + '</a></li><li><a href ng-click="mainController.logout();"">Logout</a></li>');
                 $rootScope.user = data.data.user;
+                $rootScope.loggedIn = true;
             } else {
                 window.alert('Error: ' + data.data.details);
             }
