@@ -16,117 +16,147 @@
         </div>
     </div>
     <div ng-show="search.showSimple === true">
-    <div class="row">
-        <div class="col-xs-3">
-            <label class="radio-inline"><input type="radio" name="searchType" ng-model="search.searchType" value="beer">Beers</label>
-            <label class="radio-inline"><input type="radio" name="searchType" checked="checked" ng-model="search.searchType" value="user">Users</label>
-        </div>
-        <div class="col-xs-6">
-            <form role="form" ng-submit="search.search()">
-                <div class="row">
-                  <div class="col-xs-12">
-                    <div class="input-group input-group-lg">
-                        <input ng-model="search.searchToken" type="text" class="form-control" id="searchToken" placeholder="User, Beer Name, Brewery or Beer Type...">
-                      <div class="input-group-btn">
-                        <button type="submit" class="btn btn-danger">Search</button>
-                      </div>
+        <div class="row">
+            <div class="col-xs-3">
+                <label class="radio-inline"><input type="radio" name="searchType" ng-model="search.searchType"
+                                                   value="beer">Beers</label>
+                <label class="radio-inline"><input type="radio" name="searchType" checked="checked"
+                                                   ng-model="search.searchType" value="user">Users</label>
+            </div>
+            <div class="col-xs-6">
+                <form role="form" ng-submit="search.search()">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="input-group input-group-lg">
+                                <input ng-model="search.searchToken" type="text" class="form-control" id="searchToken"
+                                       placeholder="User, Beer Name, Brewery or Beer Type...">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-danger">Search</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-    </br>
-    <div class="row">
-        <div class="col-xs-12">
-            <table class="table table-striped" ng-show="search.searchType=='user'">
-                <thead >
-                  <tr>
-                    <th>Username</th>
-                    <th>Location</th>
-                    <th>Email</th>
-                    <th>Followers</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="results in search.userResults" style="cursor: pointer;">
-                    <td><a href="#/User/{{results.User_id}}"> {{results.User_name}}</a></td>
-                    <td>{{results.User_location}}</td>
-                    <td>{{results.User_email}}</td>
-                    <td>Coming Soon</td>
-                  </tr>
-                </tbody>
-              </table>
-              <table id="beerTable" class="table table-striped" ng-show="search.searchType=='beer'">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th ng-click="search.sortByBrewery()">Brewery</th>
-                    <th>Type</th>
-                    <th>Alc</th>
-                    <th>Rating</th>
-                    <th>Price</th>
+        </br>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-striped" ng-show="search.searchType=='user'">
+                    <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Location</th>
+                        <th>Email</th>
+                        <th>Followers</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="results in search.userResults" style="cursor: pointer;">
+                        <td><a href="#/User/{{results.User_id}}"> {{results.User_name}}</a></td>
+                        <td>{{results.User_location}}</td>
+                        <td>{{results.User_email}}</td>
+                        <td>Coming Soon</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table id="beerTable" class="table table-striped" ng-show="search.searchType=='beer'">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th ng-click="search.sortByBrewery()">Brewery</th>
+                        <th>Type</th>
+                        <th>Alc</th>
+                        <th>Rating</th>
+                        <th>Price</th>
 
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="results in search.beerResults">
-                    <td>{{results.Name}}</td>
-                    <td>{{results.Brewery}}</td>
-                    <td>{{results.Type}}</td>
-                    <td>{{results.Alcohol_By_Volume}}</td>
-                    <td>{{results.Rating}}</td>
-                    <td>{{results.Price}}</td>
-                  </tr>
-                </tbody>
-              </table>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="results in search.beerResults">
+                        <td>{{results.Name}}</td>
+                        <td>{{results.Brewery}}</td>
+                        <td>{{results.Type}}</td>
+                        <td>{{results.Alcohol_By_Volume}}</td>
+                        <td>{{results.Rating}}</td>
+                        <td>{{results.Price}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
     </div>
     <div ng-show="search.showSimple == false">
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
-                <div class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Name</span>
-                    <input type="text" class="form-control">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">Name</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <br>
-                <div class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Brewery</span>
-                    <input type="text" class="form-control ">
-                </div>
-                <div class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Type</span>
-                    <input type="text" class="form-control">
-                </div>
-                <br>
-                <div class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Min Price</span>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Max Price</span>
-                    <input type="text" class="form-control">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">Type</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">Brewery</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
                 </div>
                 <br>
-                <div class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Min Rating</span>
-                    <input type="text" class="form-control">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">Min Price</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">Max Price</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group input-group-sm col-xs-2">
-                <span class="input-group-addon">Max Rating</span>
-                    <input type="text" class="form-control">
+            <br>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">Min Rating</span>
+                        <input type="text" class="form-control">
+                    </div>
                 </div>
-                <br>
-                <div id="alcohol-content-input-group" class="input-group input-group-sm col-xs-2">
-                    <span class="input-group-addon">Alcohol Content</span>
-                    <input type="text" class="form-control">
+                <div class="col-xs-6">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-addon">Max Rating</span>
+                        <input type="text" class="form-control">
+                    </div>
                 </div>
-                <br>
-                <p><a class="btn btn-primary btn-lg" href="#" role="button" onclick="sendBeerSearchRequest(null, false);">Get
-                    Beers</a></p>
-            </div><!-- /.col-lg-6 -->
-        </div><!-- /container -->
-    </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div id="alcohol-content-input-group" class="input-group input-group-sm">
+                        <span class="input-group-addon">Alcohol Content</span>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button"
+                  onclick="sendBeerSearchRequest(null, false);">Get
+                Beers</a></p>
+        </div><!-- /.col-lg-6 -->
+    </div><!-- /container -->
+</div>
 </div>
 
