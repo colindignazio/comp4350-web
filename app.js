@@ -316,26 +316,19 @@ angular.module('myApp', [
 .controller('TopDrinksController', ['$scope', '$rootScope', '$http', 'API_URL',
     function($scope, $rootScope, $http, API_URL) {
         var topDrinks = this;
-        topDrinks.results = [];
-        topDrinks.getTopDrinks = function(){
+        topDrinks.topResults = [];
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: API_URL + 'beer/getTopDrinks',
-                data: $.param(),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 responseType: 'json'
             }).then(function mySucces(data) {
                 if(200 == data.data.status) {
-                    topDrinks.results = data.data.results;
+                    topDrinks.topResults = data.data.results;
                 } else {
                     window.alert('Error: ' + data.data.details);
                 }
-
             }, function myError(response) {
 
             });
-        };
-        angular.element(document).ready(function () {
-            topDrinks.getTopDrinks();
-        });
     }]);
