@@ -242,11 +242,9 @@ angular.module('myApp', [
                 responseType: 'json'
           }).then(function mySucces(data) {
             if(200 == data.data.status) {
-
-              var results = data.data.searchResults;
-              
-
-              search.beerResults = results;
+              search.beerResults = data.data.searchResults;
+              } else {
+                      window.alert('Error: ' + data.data.details);
               }
           }, function myError(response) {
 
