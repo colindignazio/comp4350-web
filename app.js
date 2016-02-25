@@ -73,6 +73,7 @@ angular.module('myApp', [
 .controller('MainController', ['$scope', '$routeParams', '$http', 'API_URL', '$rootScope',
     function($scope, $routeParams, $http, API_URL, $rootScope) {
       var mainController = this;
+      $rootScope.searchString ="";
 
       mainController.logout = function() {
         $http({
@@ -94,6 +95,10 @@ angular.module('myApp', [
         }, function myError(response) {
 
         });
+    };
+
+    mainController.search = function(){
+            $location.path("#/BeerSearch");
     };
 }])
 
