@@ -9,6 +9,10 @@ angular.module('myApp', [
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.
+        when('/searcg', {
+            templateUrl: 'Views/Search.html',
+            controller: ''
+        }).
         when('/createAccount', {
             templateUrl: 'Views/UserCreation.html',
             controller: ''
