@@ -195,10 +195,11 @@ angular.module('myApp', [
 }])
 .controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
   function($scope, $rootScope, $http, API_URL, $location) {
-    var search = this;
+      var search = this;
 
     search.userResults = [];
     search.beerResults = [];
+    search.showSimple = true;
 
     function inListCheck(list, item){
       var isInList = false;

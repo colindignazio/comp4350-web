@@ -7,11 +7,22 @@
     </div>-->
     <div class="row">
         <div class="col-xs-3">
+        </div>
+        <div class="col-xs-3" ng-click="search.showSimple = true;">
+            <button style="background:none;border:none;"><h2>Simple Search</h2></button>
+        </div>
+        <div class="col-xs-3" ng-click="search.showSimple = false;">
+            <button style="background:none;border:none;"><h2>Advanced Search</h2></button>
+        </div>
+    </div>
+    <div ng-show="search.showSimple === true">
+    <div class="row">
+        <div class="col-xs-3">
             <label class="radio-inline"><input type="radio" name="searchType" ng-model="search.searchType" value="beer">Beers</label>
             <label class="radio-inline"><input type="radio" name="searchType" checked="checked" ng-model="search.searchType" value="user">Users</label>
         </div>
         <div class="col-xs-6">
-            <form role="form" ng-submit="search.search()">  
+            <form role="form" ng-submit="search.search()">
                 <div class="row">
                   <div class="col-xs-12">
                     <div class="input-group input-group-lg">
@@ -25,7 +36,7 @@
             </form>
         </div>
     </div>
-    <br></br>
+    </br>
     <div class="row">
         <div class="col-xs-12">
             <table class="table table-striped" ng-show="search.searchType=='user'">
@@ -43,15 +54,14 @@
                     <td>{{results.User_location}}</td>
                     <td>{{results.User_email}}</td>
                     <td>Coming Soon</td>
-                </div>
                   </tr>
                 </tbody>
               </table>
-              <table class="table table-striped" ng-show="search.searchType=='beer'">
+              <table id="beerTable" class="table table-striped" ng-show="search.searchType=='beer'">
                 <thead>
                   <tr>
                     <th>Name</th>
-                    <th>Brewery</th>
+                    <th ng-click="search.sortByBrewery()">Brewery</th>
                     <th>Type</th>
                     <th>Alc</th>
                     <th>Rating</th>
@@ -71,6 +81,52 @@
                 </tbody>
               </table>
         </div>
+    </div>
+    </div>
+    <div ng-show="search.showSimple == false">
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-3">
+                <div class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Name</span>
+                    <input type="text" class="form-control">
+                </div>
+                <br>
+                <div class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Brewery</span>
+                    <input type="text" class="form-control ">
+                </div>
+                <div class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Type</span>
+                    <input type="text" class="form-control">
+                </div>
+                <br>
+                <div class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Min Price</span>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Max Price</span>
+                    <input type="text" class="form-control">
+                </div>
+                <br>
+                <div class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Min Rating</span>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="input-group input-group-sm col-xs-2">
+                <span class="input-group-addon">Max Rating</span>
+                    <input type="text" class="form-control">
+                </div>
+                <br>
+                <div id="alcohol-content-input-group" class="input-group input-group-sm col-xs-2">
+                    <span class="input-group-addon">Alcohol Content</span>
+                    <input type="text" class="form-control">
+                </div>
+                <br>
+                <p><a class="btn btn-primary btn-lg" href="#" role="button" onclick="sendBeerSearchRequest(null, false);">Get
+                    Beers</a></p>
+            </div><!-- /.col-lg-6 -->
+        </div><!-- /container -->
     </div>
 </div>
 
