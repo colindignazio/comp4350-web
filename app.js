@@ -190,27 +190,53 @@ angular.module('myApp', [
     userAccount.saveAccount = function() {
     };
 }])
-.controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL',
-  function($scope, $rootScope, $http, API_URL) {
+.controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $rootScope, $http, API_URL, $location) {
     var search = this;
+
+    search.userResults = [];
+    search.beerResults = [];
  
     search.search = function() {
-      $http({
-          method: 'POST',
-          url: API_URL + 'Beer/search/',
-          data: $.param({searchToken: search.searchToken}),
-          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-          responseType: 'json'
-    }).then(function mySucces(data) {
-            if(200 == data.data.status) {
+      if(search.searchType=='user') {
+          //Search user database
+          $http({
+                method: 'POST',
+                url: API_URL + 'user/search/',
+                data: $.param({searchToken: search.searchToken}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+          }).then(function mySucces(data) {
+                  if(200 == data.data.status) {
+                        search.userResults = data.data.searchResults;
+                  } else {
+                      window.alert('Error: ' + data.data.details);
+                  }
                 
-            } else {
-                window.alert('Error: ' + data.data.details);
-            }
-          
-    }, function myError(response) {
+          }, function myError(response) {
 
-    }); 
+          });
+      } else if(search.searchType=='beer') {
+            //Search the beverages
+            $http({
+                method: 'POST',
+                url: API_URL + 'Beer/search/',
+                data: $.param({searchToken: search.searchToken}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+          }).then(function mySucces(data) {
+                  if(200 == data.data.status) {
+                      
+                  } else {
+                      window.alert('Error: ' + data.data.details);
+                  }
+                
+          }, function myError(response) {
+
+          });
+      } else {
+        window.alert('Please select either beers or users to search');
+      }
     
     };
 }])

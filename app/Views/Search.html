@@ -1,19 +1,69 @@
 <div ng-controller="SearchController as search">
-    <div class="row">
+    <!--<div class="row">
         <div class="col-xs-12 text-center">
             <h1>Search</h1>
             <br></br>
         </div>
-    </div>
+    </div>-->
     <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
-            <form ng-submit="search.search()">
-                <div class="form-group">
-                    <label for="searchToken">Search: </label>
-                    <input ng-model="search.searchToken" type="text" class="form-control" id="searchToken" placeholder="Name, Brewery or Beer Type...">
+        <div class="col-xs-3">
+            <label class="radio-inline"><input type="radio" name="searchType" ng-model="search.searchType" value="beer">Beers</label>
+            <label class="radio-inline"><input type="radio" name="searchType" checked="checked" ng-model="search.searchType" value="user">Users</label>
+        </div>
+        <div class="col-xs-6">
+            <form role="form" ng-submit="search.search()">  
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="input-group input-group-lg">
+                        <input ng-model="search.searchToken" type="text" class="form-control" id="searchToken" placeholder="User, Beer Name, Brewery or Beer Type...">
+                      <div class="input-group-btn">
+                        <button type="submit" class="btn btn-danger">Search</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <button type="submit" class="btn btn-danger">Search</button>
             </form>
+        </div>
+    </div>
+    <br></br>
+    <div class="row">
+        <div class="col-xs-12">
+            <table class="table table-striped" ng-show="search.searchType=='user'">
+                <thead >
+                  <tr>
+                    <th>Username</th>
+                    <th>Location</th>
+                    <th>Email</th>
+                    <th>Followers</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="results in search.userResults" style="cursor: pointer;">
+                    <td><a href="#/User/{{results.User_id}}"> {{results.User_name}}</a></td>
+                    <td>{{results.User_location}}</td>
+                    <td>{{results.User_email}}</td>
+                    <td>Coming Soon</td>
+                </div>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-striped" ng-show="search.searchType=='beer'">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Alcohol By Volume</th>
+                    <th>Other Column</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="results in search.beerResults">
+                    <td>{{results.User_name}}</td>
+                    <td>{{results.User_location}}</td>
+                    <td>{{results.User_email}}</td>
+                    <td>Coming Soon</td>
+                  </tr>
+                </tbody>
+              </table>
         </div>
     </div>
 </div>
