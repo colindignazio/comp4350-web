@@ -10,7 +10,7 @@ angular.module('myApp', [
   $routeProvider.
         when('/Search', {
             templateUrl: 'app/Views/Search.html',
-            controller: ''
+            controller: 'SearchController'
         }).
         when('/Create-Account', {
             templateUrl: 'app/Views/UserCreation.html',
@@ -190,8 +190,31 @@ angular.module('myApp', [
     userAccount.saveAccount = function() {
     };
 }])
+.controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL',
+  function($scope, $rootScope, $http, API_URL) {
+    var search = this;
  
- 
+    search.search = function() {
+      $http({
+          method: 'POST',
+          url: API_URL + 'Beer/search/',
+          data: $.param({searchToken: search.searchToken}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+    }).then(function mySucces(data) {
+            if(200 == data.data.status) {
+                
+            } else {
+                window.alert('Error: ' + data.data.details);
+            }
+          
+    }, function myError(response) {
+
+    }); 
+    
+    };
+}])
+
 .controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL',
   function($scope, $rootScope, $http, API_URL) {
     var login = this;
