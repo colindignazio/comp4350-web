@@ -199,10 +199,15 @@ angular.module('myApp', [
     search.sortType     = 'Name'; // set the default sort type
     search.sortReverse  = false;  // set the default sort order
     search.searchBeer   = '';     // set the default search/filter term
+    search.beerPrompt = "Search name, brewery or type";
+    search.userPrompt = "Search username";
+    search.placeHolder = search.beerPrompt;
 
     search.userResults = [];
     search.beerResults = [];
     search.showSimple = true;
+    search.searchTab = "beer";// beer, user, advanced
+    search.searchType = "Beer"
 
     function inListCheck(list, item){
       var isInList = false;
@@ -215,7 +220,7 @@ angular.module('myApp', [
 
  
     search.search = function() {
-      if(search.searchType=='user') {
+      if(search.searchType=='User') {
           //Search user database
           $http({
                 method: 'POST',
@@ -233,7 +238,7 @@ angular.module('myApp', [
           }, function myError(response) {
 
           });
-      } else if(search.searchType=='beer') {
+      } else if(search.searchType=='Beer') {
             //Search the beverages
             $http({
                 method: 'POST',
