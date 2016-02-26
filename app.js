@@ -7,10 +7,10 @@ angular.module('myApp', [
 ])
 .constant('API_URL', 'http://54.200.14.217/?/')
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
+    $routeProvider.
         when('/Search', {
             templateUrl: 'app/Views/Search.html',
-            controller: ''
+            controller: 'SearchController'
         }).
         when('/Create-Account', {
             templateUrl: 'app/Views/UserCreation.html',
@@ -36,6 +36,14 @@ angular.module('myApp', [
             templateUrl: 'app/Views/UserAccount.html',
             controller: 'UserAccountController'
         }).
+        when('/TopDrinks', {
+            templateUrl: 'app/Views/TopDrinks.html',
+            controller: 'TopDrinksController'
+        }).
+        when('/BeerPage', {
+            templateUrl: 'app/Views/BeerPage.html',
+            controller: 'BeerPageController'
+        }).
         otherwise({redirectTo: '/Home'});
 }])
 
@@ -47,7 +55,6 @@ angular.module('myApp', [
   var prevId = Cookies.get('session');
   if(prevId) {
       $rootScope.sessionId = prevId;
-      console.log("prevId exists");
       $http({
               method: 'POST',
               url: API_URL + 'user/getUserDetails',
@@ -84,7 +91,6 @@ angular.module('myApp', [
               responseType: 'json'
         }).then(function mySucces(data) {
               if(200 == data.data.status) {
-                  console.log(data);
                   $rootScope.loggedIn = false;
                   $rootScope.sessionId = null;
                   $rootScope.user = null;
@@ -104,6 +110,13 @@ angular.module('myApp', [
 
 .controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
   function($scope, $routeParams, $rootScope, $http, API_URL) {
+
+      var userController = this;
+      var validUser = false;
+
+      userController.reviews = [];
+      userController.followed = false;
+
       $http({
               method: 'POST',
               url: API_URL + 'user/getUser',
@@ -111,10 +124,12 @@ angular.module('myApp', [
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               responseType: 'json'
         }).then(function mySucces(data) {
-                if(200 == data.data.status) {
+                validUser = (200 == data.data.status);
+                if(validUser) {
                     $scope.usernameText = data.data.user.User_name;
                     $scope.emailText = data.data.user.User_email;
                     $scope.locationText = data.data.user.User_location;
+                    userController.reviews = data.data.user.reviews;
                     if(data.data.sessionId) {
                         $rootScope.sessionId = data.data.sessionId;
                         Cookies.set('session', data.data.sessionId, { expires: 3 });
@@ -124,7 +139,48 @@ angular.module('myApp', [
                 }
         }, function myError(response) {
 
+      });
+
+      userController.follow = function() {
+        $http({
+          method: 'POST',
+          url: API_URL + 'follow/followUser',
+          data: $.param({sessionId: $rootScope.sessionId, followeeId: $routeParams.userId}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+        }).then(function mySucces(data) {
+            //ajax here
+        }, function myError(response) {
         });
+      };
+
+      userController.unfollow = function() {
+        $http({
+          method: 'POST',
+          url: API_URL + 'follow/unfollowUser',
+          data: $.param({sessionId: $rootScope.sessionId, followeeId: $routeParams.userId}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+        }).then(function mySucces(data) {
+            //ajax here
+        }, function myError(response) {
+        });
+      };
+
+      $http({
+          method: 'POST',
+          url: API_URL + 'follow/isUserFollowed',
+          data: $.param({sessionId: $rootScope.sessionId, followeeId: $routeParams.userId}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+      }).then(function mySucces(data) {
+          if(200 == data.data.status) {
+            userController.followed = data.data.details;
+          } 
+      }, function myError(response) {
+      });
+
+
   }])
 
 .controller('CreateAccountController', ['$scope', '$rootScope', '$http', 'API_URL',
@@ -170,7 +226,6 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
     }).then(function mySucces(data) {
-            console.log(data);
             $scope.usernameText = data.data.user.User_name;
             $scope.emailText = data.data.user.User_email;
             $scope.locationText = data.data.user.User_location;
@@ -184,11 +239,84 @@ angular.module('myApp', [
     });
 
     userAccount.saveAccount = function() {
-        console.log($rootScope.user);
     };
 }])
+.controller('SearchController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $rootScope, $http, API_URL, $location) {
+    var search = this;
+    search.sortType     = 'Name'; // set the default sort type
+    search.sortReverse  = false;  // set the default sort order
+    search.searchBeer   = '';     // set the default search/filter term
+    search.beerPrompt = "Search name, brewery or type";
+    search.userPrompt = "Search username, email or location";
+    search.placeHolder = search.beerPrompt;
+
+    search.userResults = [];
+    search.beerResults = [];
+    search.showSimple = true;
+    search.searchTab = "beer";// beer, user, advanced
+    search.searchType = "Beer"
+
+    function inListCheck(list, item){
+      var isInList = false;
+      for(var j in list){
+        if(list[j].Beer_id == item.Beer_id)
+          isInList = true;
+      }
+      return isInList;
+    }
+
+
+      search.loadPage = function(beerPage){
+          $rootScope.lastBeer = beerPage.Beer_id;
+          $location.path('/BeerPage')
+      }
+
+
  
- 
+    search.search = function() {
+      if(search.searchType=='User') {
+          //Search user database
+          $http({
+                method: 'POST',
+                url: API_URL + 'user/search/',
+                data: $.param({searchToken: search.searchToken}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+          }).then(function mySucces(data) {
+                  if(200 == data.data.status) {
+                        search.userResults = data.data.searchResults;
+                  } else {
+                      window.alert('Error: ' + data.data.details);
+                  }
+                
+          }, function myError(response) {
+
+          });
+      } else if(search.searchType=='Beer') {
+            //Search the beverages
+            $http({
+                method: 'POST',
+                url: API_URL + 'Beer/search/',
+                data: $.param({searchToken: search.searchToken}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+          }).then(function mySucces(data) {
+            if(200 == data.data.status) {
+              search.beerResults = data.data.searchResults;
+              } else {
+                      window.alert('Error: ' + data.data.details);
+              }
+          }, function myError(response) {
+
+          });
+      } else {
+        window.alert('Please select either beers or users to search');
+      }
+    
+    };
+}])
+
 .controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL',
   function($scope, $rootScope, $http, API_URL) {
     var login = this;
@@ -215,4 +343,67 @@ angular.module('myApp', [
 
     });
     };
-}]);
+}])
+
+.controller('TopDrinksController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+    function($scope, $rootScope, $http, API_URL, $location) {
+        var topDrinks = this;
+        topDrinks.topResults = [];
+            $http({
+                method: 'GET',
+                url: API_URL + 'beer/getTopDrinks',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+            }).then(function mySucces(data) {
+                if(200 == data.data.status) {
+                    topDrinks.topResults = data.data.results;
+                } else {
+                    window.alert('Error: ' + data.data.details);
+                }
+            }, function myError(response) {
+
+            });
+        topDrinks.loadPage = function(beerPage){
+            $rootScope.lastBeer = beerPage.Beer_id;
+            $location.path('/BeerPage')
+        }
+    }])
+.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL',
+    function($scope, $rootScope, $http, API_URL) {
+        var beer = this;
+        beer.beer_id = $rootScope.lastBeer;
+        beer.reviews = [];
+        $http({
+            method: 'POST',
+            url: API_URL + 'beer/searchById',
+            data: $.param({beverage_id: beer.beer_id}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json'
+        }).then(function mySucces(data) {
+            if(200 == data.data.status) {
+                beer.beerObject = data.data.results;
+            } else {
+                window.alert('Error: ' + data.data.details);
+            }
+        }, function myError(response) {
+
+        });
+
+        $http({
+            method: 'POST',
+            url: API_URL + 'BeerReview/getSpecificBeerReviews',
+            data: $.param({beer_id: beer.beer_id}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json'
+        }).then(function mySucces(data) {
+            if(200 == data.data.status) {
+                beer.reviews = data.data.results;
+            } else {
+               window.alert('Error: ' + data.data.details);
+            }
+        }, function myError(response) {
+
+        });
+
+
+    }]);

@@ -1,0 +1,43 @@
+<div ng-controller="BeerPageController as beerPage">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Brewery</th>
+            <th>Type</th>
+            <th>Alc</th>
+            <th>Rating</th>
+            <th>Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="beerPage" ng-repeat="results in beerPage.beerObject">
+            <td>{{results.Name}}</td>
+            <td>{{results.Brewery}}</td>
+            <td>{{results.Type}}</td>
+            <td>{{results.Alcohol_By_Volume}}</td>
+            <td>{{results.Rating}}</td>
+            <td>{{results.Price}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+     <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Stars</th>
+                <th>Review</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="beerReviews" ng-repeat="results in beerPage.reviews">
+                <td>{{results.stars}}</td>
+                <td>{{results.review}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
+
+</div>
