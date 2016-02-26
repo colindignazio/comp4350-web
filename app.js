@@ -200,7 +200,7 @@ angular.module('myApp', [
     search.sortReverse  = false;  // set the default sort order
     search.searchBeer   = '';     // set the default search/filter term
     search.beerPrompt = "Search name, brewery or type";
-    search.userPrompt = "Search username";
+    search.userPrompt = "Search username, email or location";
     search.placeHolder = search.beerPrompt;
 
     search.userResults = [];
