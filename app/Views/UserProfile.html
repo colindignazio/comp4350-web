@@ -1,7 +1,7 @@
 <div ng-controller="UserController as userController">
     <div class="row">
         <div class="col-xs-12 text-center">
-            <h2 ng-model="usernameText">{{usernameText}}</h2>
+            <h2 id="username" ng-model="usernameText">{{usernameText}}</h2>
         </div>
         </br>
         <div class="col-xs-6 col-xs-offset-3">
@@ -22,7 +22,7 @@
         </div>
         <br></br>
         <br></br>
-        <div class="col-xs-8 col-xs-offset-2" ng-repeat="review in userController.reviews">
+        <div id="review" class="col-xs-8 col-xs-offset-2" ng-repeat="review in userController.reviews">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <div class="row">
