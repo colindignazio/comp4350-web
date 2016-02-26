@@ -112,8 +112,10 @@ angular.module('myApp', [
   function($scope, $routeParams, $rootScope, $http, API_URL) {
 
       var userController = this;
+      var validUser = false;
 
       userController.reviews = [];
+      userController.followed = false;
 
       $http({
               method: 'POST',
@@ -122,7 +124,8 @@ angular.module('myApp', [
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               responseType: 'json'
         }).then(function mySucces(data) {
-                if(200 == data.data.status) {
+                validUser = (200 == data.data.status);
+                if(validUser) {
                     $scope.usernameText = data.data.user.User_name;
                     $scope.emailText = data.data.user.User_email;
                     $scope.locationText = data.data.user.User_location;
@@ -136,7 +139,48 @@ angular.module('myApp', [
                 }
         }, function myError(response) {
 
+      });
+
+      userController.follow = function() {
+        $http({
+          method: 'POST',
+          url: API_URL + 'follow/followUser',
+          data: $.param({sessionId: $rootScope.sessionId, followeeId: $routeParams.userId}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+        }).then(function mySucces(data) {
+            //ajax here
+        }, function myError(response) {
         });
+      };
+
+      userController.unfollow = function() {
+        $http({
+          method: 'POST',
+          url: API_URL + 'follow/unfollowUser',
+          data: $.param({sessionId: $rootScope.sessionId, followeeId: $routeParams.userId}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+        }).then(function mySucces(data) {
+            //ajax here
+        }, function myError(response) {
+        });
+      };
+
+      $http({
+          method: 'POST',
+          url: API_URL + 'follow/isUserFollowed',
+          data: $.param({sessionId: $rootScope.sessionId, followeeId: $routeParams.userId}),
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          responseType: 'json'
+      }).then(function mySucces(data) {
+          if(200 == data.data.status) {
+            userController.followed = data.data.details;
+          } 
+      }, function myError(response) {
+      });
+
+
   }])
 
 .controller('CreateAccountController', ['$scope', '$rootScope', '$http', 'API_URL',
