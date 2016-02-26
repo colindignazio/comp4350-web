@@ -6,7 +6,7 @@
             <button style="background:none;border:none;"><h2>Simple Search</h2></button>
         </div>
         <div class="col-xs-3" ng-click="search.searchTab = 'advanced';">
-            <button style="background:none;border:none;"><h2>Advanced Search</h2></button>
+            <button style="background:none;border:none;"><h2>Advanced Beer Search</h2></button>
         </div>
     </div>
     <div ng-show="search.searchTab == 'beer'">
@@ -210,7 +210,7 @@
                 </div>
                 <br>
                 <p><a class="btn btn-primary btn-lg" href="#" role="button"
-                      mg-click="search.advancedSearch()">Get Beers</a></p>
+                      ng-click="search.advancedSearch()">Search</a></p>
             </div><!-- /.col-lg-6 -->
             <table class="table table-striped table-bordered">
                 <thead class='thead-default'>
