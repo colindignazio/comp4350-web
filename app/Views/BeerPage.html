@@ -1,4 +1,4 @@
-<div ng-controller="TopDrinksController as topDrinks">
+<div ng-controller="BeerPageController as beerPage">
     <table class="table table-striped">
         <thead>
         <tr>
@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr id="topDrink" ng-repeat="results in topDrinks.topResults" ng-click="topDrinks.loadPage(results)">
+        <tr id="beerPage" ng-repeat="results in beerPage.beerObject">
             <td>{{results.Name}}</td>
             <td>{{results.Brewery}}</td>
             <td>{{results.Type}}</td>
@@ -22,5 +22,22 @@
         </tr>
         </tbody>
     </table>
+
+     <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Stars</th>
+                <th>Review</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr id="beerReviews" ng-repeat="results in beerPage.reviews">
+                <td>{{results.stars}}</td>
+                <td>{{results.review}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+
 
 </div>

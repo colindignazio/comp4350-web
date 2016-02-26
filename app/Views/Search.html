@@ -129,7 +129,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr id="beerResult" ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse | filter:searchBeer">
+                    <tr id="beerResult" ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse | filter:searchBeer"  ng-click="search.loadPage(results)">
                         <td>{{results.Name}}</td>
                         <td>{{results.Brewery}}</td>
                         <td>{{results.Type}}</td>

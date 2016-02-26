@@ -7,7 +7,7 @@ angular.module('myApp', [
 ])
 .constant('API_URL', 'http://54.200.14.217/?/')
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
+    $routeProvider.
         when('/Search', {
             templateUrl: 'app/Views/Search.html',
             controller: 'SearchController'
@@ -39,6 +39,10 @@ angular.module('myApp', [
         when('/TopDrinks', {
             templateUrl: 'app/Views/TopDrinks.html',
             controller: 'TopDrinksController'
+        }).
+        when('/BeerPage', {
+            templateUrl: 'app/Views/BeerPage.html',
+            controller: 'BeerPageController'
         }).
         otherwise({redirectTo: '/Home'});
 }])
@@ -218,6 +222,13 @@ angular.module('myApp', [
       return isInList;
     }
 
+
+      search.loadPage = function(beerPage){
+          $rootScope.lastBeer = beerPage.Beer_id;
+          $location.path('/BeerPage')
+      }
+
+
  
     search.search = function() {
       if(search.searchType=='User') {
@@ -290,8 +301,8 @@ angular.module('myApp', [
     };
 }])
 
-.controller('TopDrinksController', ['$scope', '$rootScope', '$http', 'API_URL',
-    function($scope, $rootScope, $http, API_URL) {
+.controller('TopDrinksController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+    function($scope, $rootScope, $http, API_URL, $location) {
         var topDrinks = this;
         topDrinks.topResults = [];
             $http({
@@ -308,4 +319,47 @@ angular.module('myApp', [
             }, function myError(response) {
 
             });
+        topDrinks.loadPage = function(beerPage){
+            $rootScope.lastBeer = beerPage.Beer_id;
+            $location.path('/BeerPage')
+        }
+    }])
+.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL',
+    function($scope, $rootScope, $http, API_URL) {
+        var beer = this;
+        beer.beer_id = $rootScope.lastBeer;
+        beer.reviews = [];
+        $http({
+            method: 'POST',
+            url: API_URL + 'beer/searchById',
+            data: $.param({beverage_id: beer.beer_id}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json'
+        }).then(function mySucces(data) {
+            if(200 == data.data.status) {
+                beer.beerObject = data.data.results;
+            } else {
+                window.alert('Error: ' + data.data.details);
+            }
+        }, function myError(response) {
+
+        });
+
+        $http({
+            method: 'POST',
+            url: API_URL + 'BeerReview/getSpecificBeerReviews',
+            data: $.param({beer_id: beer.beer_id}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json'
+        }).then(function mySucces(data) {
+            if(200 == data.data.status) {
+                beer.reviews = data.data.results;
+            } else {
+               window.alert('Error: ' + data.data.details);
+            }
+        }, function myError(response) {
+
+        });
+
+
     }]);
