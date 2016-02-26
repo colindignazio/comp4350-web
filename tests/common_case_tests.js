@@ -62,4 +62,12 @@ module.exports = {
       .assert.visible('#beerResult')
       .end(); 
   },
+
+  'Top Drink Test' : function (browser) {
+    browser
+      .url(this.browserUrl + "#/TopDrinks")
+      .waitForElementVisible('#topDrink', 3000)
+      .assert.visible('#topDrink')
+      .end(); 
+  },
 };
