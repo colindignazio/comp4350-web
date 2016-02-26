@@ -153,6 +153,12 @@
                             <input type="text" class="form-control" ng-model="search.beerName">
                         </div>
                     </div>
+                    <div class="col-xs-6">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-addon">Brewery</span>
+                            <input type="text" class="form-control" ng-model="search.brewery">
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row">
@@ -163,9 +169,9 @@
                         </div>
                     </div>
                     <div class="col-xs-6">
-                        <div class="input-group input-group-sm">
-                            <span class="input-group-addon">Brewery</span>
-                            <input type="text" class="form-control" ng-model="search.brewery">
+                        <div id="alcohol-content-input-group" class="input-group input-group-sm">
+                            <span class="input-group-addon">Alcohol Content</span>
+                            <input type="text" class="form-control" ng-model="search.beerContent">
                         </div>
                     </div>
                 </div>
@@ -200,14 +206,6 @@
                     </div>
                 </div>
                 <br>
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div id="alcohol-content-input-group" class="input-group input-group-sm">
-                            <span class="input-group-addon">Alcohol Content</span>
-                            <input type="text" class="form-control" ng-model="search.beerContent">
-                        </div>
-                    </div>
-                </div>
                 <br>
                 <p><a class="btn btn-primary btn-lg" role="button"
                       ng-click="search.advancedSearch()">Search</a></p>
