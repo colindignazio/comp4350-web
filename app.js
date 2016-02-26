@@ -149,7 +149,7 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
         }).then(function mySucces(data) {
-            //ajax here
+            userController.followed = true;
         }, function myError(response) {
         });
       };
@@ -162,7 +162,7 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
         }).then(function mySucces(data) {
-            //ajax here
+            userController.followed = false;
         }, function myError(response) {
         });
       };
