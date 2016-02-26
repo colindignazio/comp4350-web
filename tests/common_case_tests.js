@@ -7,13 +7,6 @@ module.exports = {
       .pause(1000)
       .waitForElementVisible('#username', 3000)
       .pause(1000)
-      /*.setValue('input[id="username"]', 'Mitchell')
-      .setValue('input[id="password"]', 'MbrH42zp')
-      .click('button[id=signInButton]')
-      .waitForElementVisible('#userAccount', 3000)
-      .click('#userAccount')
-      .waitForElementVisible('#username', 3000)
-      .pause(1000)*/
       .assert.visible('#username')
       .end(); 
   },
@@ -24,13 +17,6 @@ module.exports = {
       .pause(1000)
       .waitForElementVisible('#review', 3000)
       .pause(1000)
-      /*.setValue('input[id="username"]', 'Mitchell')
-      .setValue('input[id="password"]', 'MbrH42zp')
-      .click('button[id=signInButton]')
-      .waitForElementVisible('#userAccount', 3000)
-      .click('#userAccount')
-      .waitForElementVisible('#username', 3000)
-      .pause(1000)*/
       .assert.visible('#review')
       .end(); 
   },
@@ -41,7 +27,8 @@ module.exports = {
       .pause(1000)
       .waitForElementVisible('#searchToken', 3000)
       .pause(1000)
-      .click('#userRadio')
+      .click('#searchType')
+      .click('#userSelect')
       .setValue('input[id="searchToken"]', 'Mit')
       .click('button[id=search]')
       .waitForElementVisible('#userResult', 3000)
@@ -55,7 +42,8 @@ module.exports = {
       .pause(1000)
       .waitForElementVisible('#searchToken', 3000)
       .pause(1000)
-      .click('#beerRadio')
+      .click('#searchType')
+      .click('#beerSelect')
       .setValue('input[id="searchToken"]', 'Ale')
       .click('button[id=search]')
       .waitForElementVisible('#beerResult', 3000)

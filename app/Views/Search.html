@@ -18,10 +18,10 @@
                         <div class="col-xs-12">
                             <div class="input-group input-group-lg">
                                  <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{search.searchType}} <span class="caret"></span></button>
+                                    <button id="searchType" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{search.searchType}} <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                      <li><a ng-click="search.searchType='Beer';search.searchToken = null;search.placeHolder=search.beerPrompt" href="#Search">Beer</a></li>
-                                      <li><a ng-click="search.searchType='User';search.searchToken = null;search.placeHolder=search.userPrompt" href="#Search">User</a></li>
+                                      <li><a id="beerSelect" ng-click="search.searchType='Beer';search.searchToken = null;search.placeHolder=search.beerPrompt" href="#Search">Beer</a></li>
+                                      <li><a id="userSelect" ng-click="search.searchType='User';search.searchToken = null;search.placeHolder=search.userPrompt" href="#Search">User</a></li>
                                       <li role="separator" class="divider"></li>
                                       <li><a href="#Search">Advanced Search</a></li>
                                     </ul>
