@@ -12,9 +12,9 @@
     <div ng-show="search.showSimple === true">
         <div class="row">
             <div class="col-xs-3">
-                <label class="radio-inline"><input type="radio" name="searchType" ng-model="search.searchType"
+                <label class="radio-inline"><input id="beerRadio" type="radio" name="searchType" ng-model="search.searchType"
                                                    value="beer">Beers</label>
-                <label class="radio-inline"><input type="radio" name="searchType" checked="checked"
+                <label class="radio-inline"><input id="userRadio" type="radio" name="searchType" checked="checked"
                                                    ng-model="search.searchType" value="user">Users</label>
             </div>
             <div class="col-sm-6 col-xs-9">
@@ -25,7 +25,7 @@
                                 <input ng-model="search.searchToken" type="text" class="form-control" id="searchToken"
                                        placeholder="User, Beer Name, Brewery or Beer Type...">
                                 <div class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary">Search</button>
+                                    <button id="search" type="submit" class="btn btn-primary">Search</button>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="results in search.userResults | orderBy:sortType:sortReverse"
+                    <tr id="userResult" ng-repeat="results in search.userResults | orderBy:sortType:sortReverse"
                         style="cursor: pointer;">
                         <td><a href="#/User/{{results.User_id}}"> {{results.User_name}}</a></td>
                         <td>{{results.User_location}}</td>
@@ -120,7 +120,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse | filter:searchBeer">
+                    <tr id="beerResult" ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse | filter:searchBeer">
                         <td>{{results.Name}}</td>
                         <td>{{results.Brewery}}</td>
                         <td>{{results.Type}}</td>
