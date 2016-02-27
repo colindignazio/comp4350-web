@@ -253,9 +253,18 @@ angular.module('myApp', [
 
     search.userResults = [];
     search.beerResults = [];
+    search.advancedBeerResults = [];
     search.showSimple = true;
     search.searchTab = "beer";// beer, user, advanced
-    search.searchType = "Beer"
+    search.searchType = "Beer";
+    search.beerName = "";
+    search.beerType = "";
+    search.brewery = "";
+    search.minPrice = "";
+    search.maxPrice = "";
+    search.minRating = "";
+    search.maxRating = "";
+    search.beerContent ="";
 
     function inListCheck(list, item){
       var isInList = false;
@@ -271,6 +280,30 @@ angular.module('myApp', [
           $rootScope.lastBeer = beerPage.Beer_id;
           $location.path('/BeerPage')
       }
+
+      search.advancedSearch = function() {
+          $http({
+              method: 'POST',
+              url: API_URL + 'Beer/advancedSearch/',
+              data: $.param({beerName: search.beerName,
+                  beerType: search.beerType,
+                  brewery: search.brewery,
+                  minPrice: search.minPrice,
+                  maxPrice: search.maxPrice,
+                  minRating: search.minRating,
+                  maxRating: search.maxRating,
+                  beerContent: search.beerContent}),
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              responseType: 'json'
+          }).then(function mySucces(data) {
+              if(200 == data.data.status) {
+                  search.advancedBeerResults = data.data.searchResults;
+              } else {
+                  window.alert('Error: ' + data.data.details);
+              }
+          }, function myError(response) {
+          });
+      };
 
 
  
