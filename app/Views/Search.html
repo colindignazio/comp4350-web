@@ -3,10 +3,10 @@
         <div class="col-xs-3">
         </div>
         <div class="col-xs-3" ng-click="search.searchTab = 'beer';">
-            <button style="background:none;border:none;"><h2>Simple Search</h2></button>
+            <button style="background:none;border:none;" id="simpleSearch"><h2>Simple Search</h2></button>
         </div>
         <div class="col-xs-3" ng-click="search.searchTab = 'advanced';">
-            <button style="background:none;border:none;"><h2>Advanced Beer Search</h2></button>
+            <button style="background:none;border:none;" id="advancedSearch"><h2>Advanced Beer Search</h2></button>
         </div>
     </div>
     <div ng-show="search.searchTab == 'beer'">
@@ -150,13 +150,13 @@
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Name</span>
-                            <input type="text" class="form-control" ng-model="search.beerName">
+                            <input id= "advancedBeerName" type="text" class="form-control" ng-model="search.beerName">
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Brewery</span>
-                            <input type="text" class="form-control" ng-model="search.brewery">
+                            <input id="advancedBrewery" type="text" class="form-control" ng-model="search.brewery">
                         </div>
                     </div>
                 </div>
@@ -165,13 +165,13 @@
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Type</span>
-                            <input type="text" class="form-control" ng-model="search.beerType">
+                            <input id="advancedBeerTyple" type="text" class="form-control" ng-model="search.beerType">
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div id="alcohol-content-input-group" class="input-group input-group-sm">
                             <span class="input-group-addon">Alcohol Content</span>
-                            <input type="text" class="form-control" ng-model="search.beerContent">
+                            <input id="advancedBeerContent" type="text" class="form-control" ng-model="search.beerContent">
                         </div>
                     </div>
                 </div>
@@ -180,13 +180,13 @@
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Min Price</span>
-                            <input type="text" class="form-control" ng-model="search.minPrice">
+                            <input id="advancedMinPrice" type="text" class="form-control" ng-model="search.minPrice">
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Max Price</span>
-                            <input type="text" class="form-control" ng-model="search.maxPrice">
+                            <input id="advancedMaxPrice" type="text" class="form-control" ng-model="search.maxPrice">
                         </div>
                     </div>
                 </div>
@@ -195,19 +195,19 @@
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Min Rating</span>
-                            <input type="text" class="form-control" ng-model="search.minRating">
+                            <input id="advancedMinRating" type="text" class="form-control" ng-model="search.minRating">
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="input-group input-group-sm">
                             <span class="input-group-addon">Max Rating</span>
-                            <input type="text" class="form-control" ng-model="search.maxRating">
+                            <input id="advancedMaxRating" type="text" class="form-control" ng-model="search.maxRating">
                         </div>
                     </div>
                 </div>
                 <br>
                 <br>
-                <p><a class="btn btn-primary btn-lg" role="button"
+                <p><a class="btn btn-primary btn-lg" id="advancedSearchSubmit" role="button"
                       ng-click="search.advancedSearch()">Search</a></p>
             </div><!-- /.col-lg-6 -->
             <table class="table table-striped table-bordered">
