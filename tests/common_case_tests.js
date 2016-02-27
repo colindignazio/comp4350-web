@@ -75,6 +75,22 @@ module.exports = {
             .end();
     },
 
+    'Beer Advanced Search Test' : function (browser) {
+        browser
+            .url(this.browserUrl + "#/Search")
+            .pause(1000)
+            .click('button[id=advancedSearch]')
+            .waitForElementVisible('#advancedBeerName', 3000)
+            .pause(1000)
+            .setValue('input[id="advancedBeerName"]', 'Grass')
+            .pause(1000)
+            .setValue('input[id="advancedBeerType"]', 'Ale')
+            .click('button[id=advancedSearchSubmit]')
+            .waitForElementVisible('#advancedBeerResults', 3000)
+            .assert.visible('#advancedBeerResults')
+            .end();
+    },
+
     'Top Drink Test' : function (browser) {
         browser
             .url(this.browserUrl + "#/TopDrinks")
