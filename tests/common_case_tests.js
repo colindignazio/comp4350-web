@@ -1,6 +1,30 @@
 /* jshint expr: true */
 module.exports = {
     browserUrl: "http://54.201.49.162",
+
+    'Leave Review Test' : function (browser) {
+        browser
+            .url(this.browserUrl + "#/Login")
+            .waitForElementVisible('#username', 3000)
+            .setValue('input[id="username"]', "dexterpeters")
+            .setValue('input[id="password"]', "password")
+            .click('button[id="signInButton"]')
+            .url(this.browserUrl + "#/TopDrinks")
+            .waitForElementVisible('#topDrink', 3000)
+            .click('tr[id="topDrink"]')
+            .pause(1000)
+            .setValue('input[id="stars"]', '5')
+            .setValue('input[id="pricepaid"]', '6.69')
+            .setValue('input[id="review"]', 'Automated Review')
+            .pause(1000)
+            .click('button[id=leaveReviewButton]')
+            .pause(1000)
+
+            .assert.elementPresent('[id="beerReviews]')
+
+            .end();
+    },
+
     'View User Profile Test' : function (browser) {
         browser
             .url(this.browserUrl + "#/User/1")

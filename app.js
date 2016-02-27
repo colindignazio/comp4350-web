@@ -457,7 +457,7 @@ angular.module('myApp', [
                 responseType: 'json'
             }).then(function mySucces(data) {
                 if(200 == data.status) {
-                    window.alert("Review left successfully!");
+                    //window.alert("Review left successfully!");
                     //At some point make this so it doesn't require a page reload
                 } else {
                     window.alert('Error: ' + data.data.details);
