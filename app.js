@@ -373,6 +373,7 @@ angular.module('myApp', [
         var beer = this;
         beer.beer_id = $rootScope.lastBeer;
         beer.reviews = [];
+
         $http({
             method: 'POST',
             url: API_URL + 'beer/searchById',
@@ -404,6 +405,33 @@ angular.module('myApp', [
         }, function myError(response) {
 
         });
+        beer.newReviewStars = null;
+        beer.leaveReview = function(){
+            if($rootScope.loggedIn == false){
+                window.alert("You must be logged in to leave a review!");
+                return;
+            }
+            if(beer.newReviewStars == null){
+                window.alert("You must assign a star rating!");
+                return;
+            }
+            //window.alert("User: "  +$rootScope.user.User_id + "\nBeerID: " + beer.beer_id + "\nStars: " + beer.newReviewStars + "\nReview: " + beer.newReview);
+            $http({
+                method: 'POST',
+                url: API_URL + 'BeerReview/create',
+                data: $.param({user_id: $rootScope.user.User_id, beer_id: beer.beer_id, stars: beer.newReviewStars, review: beer.newReview, price: beer.pricePaid}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+            }).then(function mySucces(data) {
+                if(200 == data.status) {
+                    window.alert("Review left successfully!");
+                    //At some point make this so it doesn't require a page reload
+                } else {
+                    window.alert('Error: ' + data.data.details);
+                }
+            }, function myError(response) {
 
+            });
+        }
 
     }]);
