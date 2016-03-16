@@ -452,7 +452,7 @@ angular.module('myApp', [
             $http({
                 method: 'POST',
                 url: API_URL + 'BeerReview/create',
-                data: $.param({user_id: $rootScope.user.User_id, beer_id: beer.beer_id, stars: beer.newReviewStars, review: beer.newReview, price: beer.pricePaid}),
+                data: $.param({user_id: $rootScope.user.User_id, beer_id: beer.beer_id, stars: beer.newReviewStars, review: beer.newReview, price: beer.pricePaid, storeName: beer.storeName, storeAddress: beer.storeAddress}),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 responseType: 'json'
             }).then(function mySucces(data) {
