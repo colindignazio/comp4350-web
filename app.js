@@ -40,7 +40,7 @@ angular.module('myApp', [
             templateUrl: 'app/Views/TopDrinks.html',
             controller: 'TopDrinksController'
         }).
-        when('/BeerPage', {
+        when('/BeerPage/:beerId', {
             templateUrl: 'app/Views/BeerPage.html',
             controller: 'BeerPageController'
         }).
@@ -167,6 +167,10 @@ angular.module('myApp', [
         });
       };
 
+      userController.viewBeer = function(beerId) {
+          $location.path('/BeerPage/' + beerId);
+      };
+
       $http({
           method: 'POST',
           url: API_URL + 'follow/isUserFollowed',
@@ -278,7 +282,7 @@ angular.module('myApp', [
 
       search.loadPage = function(beerPage){
           $rootScope.lastBeer = beerPage.Beer_id;
-          $location.path('/BeerPage')
+          $location.path('/BeerPage/' + beerPage.Beer_id);
       }
 
       search.advancedSearch = function() {
@@ -398,13 +402,13 @@ angular.module('myApp', [
             });
         topDrinks.loadPage = function(beerPage){
             $rootScope.lastBeer = beerPage.Beer_id;
-            $location.path('/BeerPage')
+            $location.path('/BeerPage/' + beerPage.Beer_id);
         }
     }])
-.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL',
-    function($scope, $rootScope, $http, API_URL) {
+.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL', '$routeParams', 
+    function($scope, $rootScope, $http, API_URL, $routeParams) {
         var beer = this;
-        beer.beer_id = $rootScope.lastBeer;
+        beer.beer_id = $routeParams.beerId;
         beer.reviews = [];
 
         $http({
