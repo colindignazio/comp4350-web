@@ -285,6 +285,10 @@ angular.module('myApp', [
           $location.path('/BeerPage/' + beerPage.Beer_id);
       }
 
+      search.loadUser = function(userPage) {
+          $location.path('/User/' + userPage.User_id);
+      }
+
       search.advancedSearch = function() {
           $http({
               method: 'POST',
