@@ -40,7 +40,7 @@ angular.module('myApp', [
             templateUrl: 'app/Views/TopDrinks.html',
             controller: 'TopDrinksController'
         }).
-        when('/BeerPage', {
+        when('/BeerPage/:beerId', {
             templateUrl: 'app/Views/BeerPage.html',
             controller: 'BeerPageController'
         }).
@@ -167,6 +167,10 @@ angular.module('myApp', [
         });
       };
 
+      userController.viewBeer = function(beerId) {
+          $location.path('/BeerPage/' + beerId);
+      };
+
       $http({
           method: 'POST',
           url: API_URL + 'follow/isUserFollowed',
@@ -253,9 +257,18 @@ angular.module('myApp', [
 
     search.userResults = [];
     search.beerResults = [];
+    search.advancedBeerResults = [];
     search.showSimple = true;
     search.searchTab = "beer";// beer, user, advanced
-    search.searchType = "Beer"
+    search.searchType = "Beer";
+    search.beerName = "";
+    search.beerType = "";
+    search.brewery = "";
+    search.minPrice = "";
+    search.maxPrice = "";
+    search.minRating = "";
+    search.maxRating = "";
+    search.beerContent ="";
 
     function inListCheck(list, item){
       var isInList = false;
@@ -269,8 +282,36 @@ angular.module('myApp', [
 
       search.loadPage = function(beerPage){
           $rootScope.lastBeer = beerPage.Beer_id;
-          $location.path('/BeerPage')
+          $location.path('/BeerPage/' + beerPage.Beer_id);
       }
+
+      search.loadUser = function(userPage) {
+          $location.path('/User/' + userPage.User_id);
+      }
+
+      search.advancedSearch = function() {
+          $http({
+              method: 'POST',
+              url: API_URL + 'Beer/advancedSearch/',
+              data: $.param({beerName: search.beerName,
+                  beerType: search.beerType,
+                  brewery: search.brewery,
+                  minPrice: search.minPrice,
+                  maxPrice: search.maxPrice,
+                  minRating: search.minRating,
+                  maxRating: search.maxRating,
+                  beerContent: search.beerContent}),
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              responseType: 'json'
+          }).then(function mySucces(data) {
+              if(200 == data.data.status) {
+                  search.advancedBeerResults = data.data.searchResults;
+              } else {
+                  window.alert('Error: ' + data.data.details);
+              }
+          }, function myError(response) {
+          });
+      };
 
 
  
@@ -366,14 +407,15 @@ angular.module('myApp', [
             });
         topDrinks.loadPage = function(beerPage){
             $rootScope.lastBeer = beerPage.Beer_id;
-            $location.path('/BeerPage')
+            $location.path('/BeerPage/' + beerPage.Beer_id);
         }
     }])
-.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL',
-    function($scope, $rootScope, $http, API_URL) {
+.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL', '$routeParams', 
+    function($scope, $rootScope, $http, API_URL, $routeParams) {
         var beer = this;
-        beer.beer_id = $rootScope.lastBeer;
+        beer.beer_id = $routeParams.beerId;
         beer.reviews = [];
+
         $http({
             method: 'POST',
             url: API_URL + 'beer/searchById',
@@ -405,6 +447,33 @@ angular.module('myApp', [
         }, function myError(response) {
 
         });
+        beer.newReviewStars = null;
+        beer.leaveReview = function(){
+            if($rootScope.loggedIn == false){
+                window.alert("You must be logged in to leave a review!");
+                return;
+            }
+            if(beer.newReviewStars == null){
+                window.alert("You must assign a star rating!");
+                return;
+            }
+            //window.alert("User: "  +$rootScope.user.User_id + "\nBeerID: " + beer.beer_id + "\nStars: " + beer.newReviewStars + "\nReview: " + beer.newReview);
+            $http({
+                method: 'POST',
+                url: API_URL + 'BeerReview/create',
+                data: $.param({user_id: $rootScope.user.User_id, beer_id: beer.beer_id, stars: beer.newReviewStars, review: beer.newReview, price: beer.pricePaid, storeName: beer.storeName, storeAddress: beer.storeAddress}),
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                responseType: 'json'
+            }).then(function mySucces(data) {
+                if(200 == data.status) {
+                    //window.alert("Review left successfully!");
+                    //At some point make this so it doesn't require a page reload
+                } else {
+                    window.alert('Error: ' + data.data.details);
+                }
+            }, function myError(response) {
 
+            });
+        }
 
     }]);
