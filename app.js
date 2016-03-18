@@ -40,6 +40,10 @@ angular.module('myApp', [
             templateUrl: 'app/Views/TopDrinks.html',
             controller: 'TopDrinksController'
         }).
+        when('/Feed', {
+            templateUrl: 'app/Views/Feed.html',
+            controller: 'FeedController'
+        }).
         when('/BeerPage/:beerId', {
             templateUrl: 'app/Views/BeerPage.html',
             controller: 'BeerPageController'
@@ -107,6 +111,28 @@ angular.module('myApp', [
             $location.path("/BeerSearch");
     };
 }])
+
+.controller('FeedController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
+  function($scope, $routeParams, $rootScope, $http, API_URL) {
+
+      var feedController = this;
+
+      feedController.reviews = [];
+
+      $http({
+            method: 'POST',
+            url: API_URL + 'follow/getRecentReviewsSession',
+            data: $.param({sessionId: $rootScope.sessionId}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json'
+      }).then(function mySucces(data) {
+              if(data.data.status == 200) {
+                feedController.reviews = data.data.details;
+              }
+      }, function myError(response) {
+
+      });
+  }])
 
 .controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
   function($scope, $routeParams, $rootScope, $http, API_URL) {
