@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr id="topDrink" ng-repeat="results in topDrinks.topResults" ng-click="topDrinks.loadPage(results)">
+        <tr id="topDrink" ng-repeat="results in topDrinks.topResults" ng-click="topDrinks.loadPage(results)" style="cursor: pointer">
             <td>{{results.Name}}</td>
             <td>{{results.Brewery}}</td>
             <td>{{results.Type}}</td>
