@@ -384,8 +384,8 @@ angular.module('myApp', [
     };
 }])
 
-.controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL',
-  function($scope, $rootScope, $http, API_URL) {
+.controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $rootScope, $http, API_URL, $location) {
     var login = this;
  
     login.login = function() {
@@ -399,6 +399,7 @@ angular.module('myApp', [
             if(200 == data.data.status) {
                 $rootScope.user = data.data.user;
                 $rootScope.loggedIn = true;
+                $location.path('');
             } else {
                 window.alert('Error: ' + data.data.details);
             }
