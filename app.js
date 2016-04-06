@@ -40,7 +40,11 @@ angular.module('myApp', [
             templateUrl: 'app/Views/TopDrinks.html',
             controller: 'TopDrinksController'
         }).
-        when('/BeerPage', {
+        when('/Feed', {
+            templateUrl: 'app/Views/Feed.html',
+            controller: 'FeedController'
+        }).
+        when('/BeerPage/:beerId', {
             templateUrl: 'app/Views/BeerPage.html',
             controller: 'BeerPageController'
         }).
@@ -108,6 +112,28 @@ angular.module('myApp', [
     };
 }])
 
+.controller('FeedController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
+  function($scope, $routeParams, $rootScope, $http, API_URL) {
+
+      var feedController = this;
+
+      feedController.reviews = [];
+
+      $http({
+            method: 'POST',
+            url: API_URL + 'follow/getRecentReviewsSession',
+            data: $.param({sessionId: $rootScope.sessionId}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            responseType: 'json'
+      }).then(function mySucces(data) {
+              if(data.data.status == 200) {
+                feedController.reviews = data.data.details;
+              }
+      }, function myError(response) {
+
+      });
+  }])
+
 .controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
   function($scope, $routeParams, $rootScope, $http, API_URL) {
 
@@ -165,6 +191,10 @@ angular.module('myApp', [
             userController.followed = false;
         }, function myError(response) {
         });
+      };
+
+      userController.viewBeer = function(beerId) {
+          $location.path('/BeerPage/' + beerId);
       };
 
       $http({
@@ -278,7 +308,11 @@ angular.module('myApp', [
 
       search.loadPage = function(beerPage){
           $rootScope.lastBeer = beerPage.Beer_id;
-          $location.path('/BeerPage')
+          $location.path('/BeerPage/' + beerPage.Beer_id);
+      }
+
+      search.loadUser = function(userPage) {
+          $location.path('/User/' + userPage.User_id);
       }
 
       search.advancedSearch = function() {
@@ -350,8 +384,8 @@ angular.module('myApp', [
     };
 }])
 
-.controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL',
-  function($scope, $rootScope, $http, API_URL) {
+.controller('LoginController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $rootScope, $http, API_URL, $location) {
     var login = this;
  
     login.login = function() {
@@ -365,6 +399,7 @@ angular.module('myApp', [
             if(200 == data.data.status) {
                 $rootScope.user = data.data.user;
                 $rootScope.loggedIn = true;
+                $location.path('');
             } else {
                 window.alert('Error: ' + data.data.details);
             }
@@ -398,13 +433,13 @@ angular.module('myApp', [
             });
         topDrinks.loadPage = function(beerPage){
             $rootScope.lastBeer = beerPage.Beer_id;
-            $location.path('/BeerPage')
+            $location.path('/BeerPage/' + beerPage.Beer_id);
         }
     }])
-.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL',
-    function($scope, $rootScope, $http, API_URL) {
+.controller('BeerPageController', ['$scope', '$rootScope', '$http', 'API_URL', '$routeParams', 
+    function($scope, $rootScope, $http, API_URL, $routeParams) {
         var beer = this;
-        beer.beer_id = $rootScope.lastBeer;
+        beer.beer_id = $routeParams.beerId;
         beer.reviews = [];
 
         $http({
@@ -452,12 +487,12 @@ angular.module('myApp', [
             $http({
                 method: 'POST',
                 url: API_URL + 'BeerReview/create',
-                data: $.param({user_id: $rootScope.user.User_id, beer_id: beer.beer_id, stars: beer.newReviewStars, review: beer.newReview, price: beer.pricePaid}),
+                data: $.param({user_id: $rootScope.user.User_id, beer_id: beer.beer_id, stars: beer.newReviewStars, review: beer.newReview, price: beer.pricePaid, storeName: beer.storeName, storeAddress: beer.storeAddress}),
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 responseType: 'json'
             }).then(function mySucces(data) {
                 if(200 == data.status) {
-                    window.alert("Review left successfully!");
+                    //window.alert("Review left successfully!");
                     //At some point make this so it doesn't require a page reload
                 } else {
                     window.alert('Error: ' + data.data.details);

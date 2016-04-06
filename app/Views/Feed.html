@@ -1,0 +1,50 @@
+<div ng-controller="FeedController as feed">
+<div class="row">
+        <div class="col-xs-12 text-center">
+            <h2>Followers Reviews</h2>
+        </div>
+        <br></br>
+        <br></br>
+        <div id="review" class="col-xs-8 col-xs-offset-2" ng-repeat="review in feed.reviews">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h4><a href="#/User/{{review.User_id}}">{{review.User_name}}</a></h4>
+                    </div>
+                    <div class="col-sm-6 text-center">
+                        <h4><a href="#/BeerPage/{{review.beer_id}}">{{review.Name}}</a></h4>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <h4>${{review.price}}</h4>
+                    </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <p>Rating:</p>
+                    </div>
+                    <div class="col-xs-9 text-left">
+                        <p>{{review.stars}}/5</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <p>Store:</p>
+                    </div>
+                    <div class="col-xs-9 text-left">
+                        <p>{{review.name}}, {{review.address}}: {{review.phone_number}}</p>
+                    </div>
+                </div>
+                <br></br>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>{{review.review}}</p>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

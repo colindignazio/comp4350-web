@@ -70,8 +70,8 @@
                     </thead>
                     <tbody>
                     <tr id="userResult" ng-repeat="results in search.userResults | orderBy:sortType:sortReverse"
-                        style="cursor: pointer;">
-                        <td><a href="#/User/{{results.User_id}}"> {{results.User_name}}</a></td>
+                        style="cursor: pointer;" ng-click="search.loadUser(results)">
+                        <td>{{results.User_name}}</td>
                         <td>{{results.User_location}}</td>
                         <td>{{results.User_email}}</td>
                         <td>Coming Soon</td>
@@ -119,7 +119,16 @@
                             </a>
                         </th>
                         <th>Rating</th>
-                        <th>Price</th>
+                        <th>
+                            <a href="#Search" ng-click="sortType = 'AvgPrice'; sortReverse = !sortReverse ">
+                                Price
+                                <span ng-show="sortType == 'AvgPrice' && !sortReverse"
+                                      class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'AvgPrice' && sortReverse"
+                                      class="fa fa-caret-up"></span>
+                                <span ng-show="sortType != 'Price'" class="fa fa-sort"></span>
+                            </a>
+                        </th>
 
                     </tr>
                     </thead>
@@ -128,13 +137,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr id="beerResult" ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse | filter:searchBeer"  ng-click="search.loadPage(results)">
+                    <tr id="beerResult" ng-repeat="results in search.beerResults | orderBy:sortType:sortReverse | filter:searchBeer"  ng-click="search.loadPage(results)" style="cursor: pointer;">
                         <td>{{results.Name}}</td>
                         <td>{{results.Brewery}}</td>
                         <td>{{results.Type}}</td>
                         <td>{{results.Alcohol_By_Volume}}</td>
                         <td>{{results.Rating}}</td>
-                        <td>{{results.Price}}</td>
+                        <td>{{results.AvgPrice}}</td>
                     </tr>
                     </tbody>
                 </table>

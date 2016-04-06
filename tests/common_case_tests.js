@@ -1,6 +1,32 @@
 /* jshint expr: true */
 module.exports = {
     browserUrl: "http://54.201.49.162",
+
+    'Leave Review Test' : function (browser) {
+        browser
+            .url(this.browserUrl + "#/Login")
+            .waitForElementVisible('#username', 3000)
+            .setValue('input[id="username"]', "mickeal")
+            .setValue('input[id="password"]', "hello")
+            .click('button[id="signInButton"]')
+            .url(this.browserUrl + "#/TopDrinks")
+            .waitForElementVisible('#topDrink', 3000)
+            .click('tr[id="topDrink"]')
+            .pause(1000)
+            .setValue('input[id="stars"]', '5')
+            .setValue('input[id="pricepaid"]', '1.23')
+            .setValue('input[id="review"]', 'Automated Review')
+            .click('button[id=leaveReviewButton]')
+            .url(this.browserUrl + "#/TopDrinks")
+            .waitForElementVisible('#topDrink', 3000)
+            .click('tr[id="topDrink"]')
+            .pause(1000)
+            .assert.elementPresent('[id="beerReviews"]')
+            .end();
+        //TODO: Implement delete function so that we can remove the review after posting it as to avoid duplicate
+        // test reviews (so we can check that the just run test is indeed the review we just found)
+    },
+
     'View User Profile Test' : function (browser) {
         browser
             .url(this.browserUrl + "#/User/1")
