@@ -316,17 +316,21 @@ angular.module('myApp', [
       }
 
       search.advancedSearch = function() {
+          //Build the post paramaters for the advance search query
+          var postParams = {};
+          if(search.beerName != "") postParams.beerName = search.beerName;
+          if(search.brewery != "") postParams.brewery = search.brewery;
+          if(search.beerType != "") postParams.beerType = search.beerType;
+          if(search.minPrice != "") postParams.minPrice = search.minPrice;
+          if(search.maxPrice != "") postParams.maxPrice = search.maxPrice;
+          if(search.minRating != "") postParams.minRating = search.minRating;
+          if(search.maxRating != "") postParams.maxRating = search.maxRating;
+          if(search.beerContent != "") postParams.beerContent = search.beerContent;
+
           $http({
               method: 'POST',
               url: API_URL + 'Beer/advancedSearch/',
-              data: $.param({beerName: search.beerName,
-                  beerType: search.beerType,
-                  brewery: search.brewery,
-                  minPrice: search.minPrice,
-                  maxPrice: search.maxPrice,
-                  minRating: search.minRating,
-                  maxRating: search.maxRating,
-                  beerContent: search.beerContent}),
+              data: $.param(postParams),
               headers: {'Content-Type': 'application/x-www-form-urlencoded'},
               responseType: 'json'
           }).then(function mySucces(data) {
