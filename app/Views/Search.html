@@ -267,7 +267,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr id="advancedBeerResults" ng-repeat="results in search.advancedBeerResults | orderBy:sortType:sortReverse | filter:searchBeer"  ng-click="search.loadPage(results)">
+                <tr id="advancedBeerResults" ng-repeat="results in search.advancedBeerResults | orderBy:sortType:sortReverse | filter:searchBeer"  ng-click="search.loadPage(results)" style="cursor: pointer;">
                     <td>{{results.Name}}</td>
                     <td>{{results.Brewery}}</td>
                     <td>{{results.Type}}</td>
