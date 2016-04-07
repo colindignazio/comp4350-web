@@ -336,6 +336,11 @@ angular.module('myApp', [
           }).then(function mySucces(data) {
               if(200 == data.data.status) {
                   search.advancedBeerResults = data.data.searchResults;
+                  angular.forEach(search.advancedBeerResults, function (result) {
+                      result.Alcohol_By_Volume = parseFloat(result.Alcohol_By_Volume);
+                      result.Rating = parseFloat(result.Rating);
+                      result.AvgPrice = parseFloat(result.AvgPrice);
+                  });
               } else {
                   window.alert('Error: ' + data.data.details);
               }
@@ -375,6 +380,11 @@ angular.module('myApp', [
           }).then(function mySucces(data) {
             if(200 == data.data.status) {
               search.beerResults = data.data.searchResults;
+              angular.forEach(search.beerResults, function (result) {
+                  result.Alcohol_By_Volume = parseFloat(result.Alcohol_By_Volume);
+                  result.Rating = parseFloat(result.Rating);
+                  result.AvgPrice = parseFloat(result.AvgPrice);
+              });
               } else {
                       window.alert('Error: ' + data.data.details);
               }
