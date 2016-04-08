@@ -128,7 +128,7 @@ angular.module('myApp', [
                   $rootScope.user = null;
                   Cookies.remove('session');
                   $location.path('Login');
-                  window.alert("Your Session Has Become Invalid. Please Log In Again.")
+                  window.alert("Your Session Has Become Invalid. Please Log In Again.");
               }
       }, function myError(response) {
 
@@ -246,8 +246,8 @@ angular.module('myApp', [
     };
 }])
 
-.controller('UserAccountController', ['$scope', '$rootScope', '$http', 'API_URL',
-  function($scope, $rootScope, $http, API_URL) {
+.controller('UserAccountController', ['$scope', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $rootScope, $http, API_URL, $location) {
     var userAccount = this;
 
     $http({
@@ -257,13 +257,23 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
     }).then(function mySucces(data) {
-            $scope.usernameText = data.data.user.User_name;
-            $scope.emailText = data.data.user.User_email;
-            $scope.locationText = data.data.user.User_location;
-            $rootScope.user = data.data.user;
-            if(data.data.sessionId) {
-                $rootScope.sessionId = data.data.sessionId;
-                Cookies.set('session', data.data.sessionId, { expires: 3 });
+            if(data.data.status == 200) {
+                $scope.usernameText = data.data.user.User_name;
+                $scope.emailText = data.data.user.User_email;
+                $scope.locationText = data.data.user.User_location;
+                $rootScope.user = data.data.user;
+                if(data.data.sessionId) {
+                    $rootScope.sessionId = data.data.sessionId;
+                    Cookies.set('session', data.data.sessionId, { expires: 3 });
+                }
+            } else {
+                //Session Became Invalid
+                  $rootScope.loggedIn = false;
+                  $rootScope.sessionId = null;
+                  $rootScope.user = null;
+                  Cookies.remove('session');
+                  $location.path('Login');
+                  window.alert("Your Session Has Become Invalid. Please Log In Again.");
             }
     }, function myError(response) {
         
