@@ -135,8 +135,8 @@ angular.module('myApp', [
       });
   }])
 
-.controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
-  function($scope, $routeParams, $rootScope, $http, API_URL) {
+.controller('UserController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $routeParams, $rootScope, $http, API_URL, $location) {
 
       var userController = this;
       var validUser = false;
@@ -176,7 +176,17 @@ angular.module('myApp', [
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
           responseType: 'json'
         }).then(function mySucces(data) {
-            userController.followed = true;
+            if(data.data.status == 200) {
+                userController.followed = true;
+            } else {
+                //Session Became Invalid
+                $rootScope.loggedIn = false;
+                $rootScope.sessionId = null;
+                $rootScope.user = null;
+                Cookies.remove('session');
+                $location.path('Login');
+                window.alert("Your Session Has Become Invalid. Please Log In Again.");
+            }
         }, function myError(response) {
         });
       };
