@@ -13,40 +13,31 @@ angular.module('myApp', [
             controller: 'SearchController'
         }).
         when('/Create-Account', {
-            templateUrl: 'app/Views/UserCreation.html',
-            controller: 'CreateAccountController'
+            templateUrl: 'app/Views/UserCreation.html'
         }).
         when('/Login', {
-            templateUrl: 'app/Views/Login.html',
-            controller: 'LoginController'
+            templateUrl: 'app/Views/Login.html'
         }).
         when('/BeerSearch', {
-            templateUrl: 'app/Views/BeerSearch.html',
-            controller: 'beerController'
+            templateUrl: 'app/Views/BeerSearch.html'
         }).
         when('/Home', {
-            templateUrl: 'app/Views/Home.html',
-            controller: ''
+            templateUrl: 'app/Views/Home.html'
         }).
         when('/User/:userId', {
-            templateUrl: 'app/Views/UserProfile.html',
-            controller: 'UserController'
+            templateUrl: 'app/Views/UserProfile.html'
         }).
         when('/User-Account', {
-            templateUrl: 'app/Views/UserAccount.html',
-            controller: 'UserAccountController'
+            templateUrl: 'app/Views/UserAccount.html'
         }).
         when('/TopDrinks', {
-            templateUrl: 'app/Views/TopDrinks.html',
-            controller: 'TopDrinksController'
+            templateUrl: 'app/Views/TopDrinks.html'
         }).
         when('/Feed', {
-            templateUrl: 'app/Views/Feed.html',
-            controller: 'FeedController'
+            templateUrl: 'app/Views/Feed.html'
         }).
         when('/BeerPage/:beerId', {
-            templateUrl: 'app/Views/BeerPage.html',
-            controller: 'BeerPageController'
+            templateUrl: 'app/Views/BeerPage.html'
         }).
         otherwise({redirectTo: '/Home'});
 }])
@@ -112,8 +103,8 @@ angular.module('myApp', [
     };
 }])
 
-.controller('FeedController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL',
-  function($scope, $routeParams, $rootScope, $http, API_URL) {
+.controller('FeedController', ['$scope', '$routeParams', '$rootScope', '$http', 'API_URL', '$location',
+  function($scope, $routeParams, $rootScope, $http, API_URL, $location) {
 
       var feedController = this;
 
@@ -126,8 +117,18 @@ angular.module('myApp', [
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             responseType: 'json'
       }).then(function mySucces(data) {
+              console.log(API_URL + 'follow/getRecentReviewsSession')
+              console.log($rootScope.sessionId);
               if(data.data.status == 200) {
                 feedController.reviews = data.data.details;
+              } else if(data.data.status == 401) {
+                  //Session Became Invalid
+                  $rootScope.loggedIn = false;
+                  $rootScope.sessionId = null;
+                  $rootScope.user = null;
+                  Cookies.remove('session');
+                  $location.path('Login');
+                  window.alert("Your Session Has Become Invalid. Please Log In Again.")
               }
       }, function myError(response) {
 
