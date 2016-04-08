@@ -23,36 +23,41 @@
         </tbody>
     </table>
 
-    <div class="row">
-        <div class="col-xs-6 col-xs-offset-3">
-            <form ng-submit="beerPage.leaveReview()">
-                <div class="form-group">
-                    <label for="stars">Stars: </label>
-                    <input ng-model="beerPage.newReviewStars" type="text" class="form-control" id="stars" placeholder="Stars 1 - 5">
-                </div>
-                <div class="form-group">
-                     <label for="review">Price Paid: </label>
-                     <input ng-model="beerPage.pricePaid" type="text" class="form-control" id="pricepaid" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="review">Review: </label>
-                    <input ng-model="beerPage.newReview" type="text" class="form-control" id="review" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="storeName">Store Name: </label>
-                    <input ng-model="beerPage.storeName" type="text" class="form-control" id="storeName" placeholder="">
-                </div>
-                <div class="form-group">
-                    <label for="storeAddress">Store Address: </label>
-                    <input ng-model="beerPage.storeAddress" type="text" class="form-control" id="storeAddress" placeholder="">
-                </div>
+    <div class="leavereview">
+        <form ng-submit="beerPage.leaveReview()">
+            <div class="form-group">
+                <label for="stars">Stars: </label>
+                <select ng-model="beerPage.newReviewStars" type="number" class="form-control" id="stars">
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <div class="form-group">
+                 <label for="review">Price Paid: </label>
+                 <input ng-model="beerPage.pricePaid" type="text" class="form-control" id="pricepaid" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="review">Review: </label>
+                <textarea ng-model="beerPage.newReview" rows="4" type="text" class="form-control" id="review" placeholder=""/>
+            </div>
+            <div class="form-group">
+                <label for="storeName">Store Name: </label>
+                <input ng-model="beerPage.storeName" type="text" class="form-control" id="storeName" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="storeAddress">Store Address: </label>
+                <input ng-model="beerPage.storeAddress" type="text" class="form-control" id="storeAddress" placeholder="">
+            </div>
 
-                <button id="leaveReviewButton" type="submit" class="btn btn-default">Post review</button>
-            </form>
-        </div>
+            <button id="leaveReviewButton" type="submit" class="btn btn-default">Post review</button>
+        </form>
     </div>
 
-     <table class="table table-striped">
+     <table class="table table-striped reviewstable">
             <thead>
             <tr>
                 <th>Stars</th>

@@ -28,3 +28,13 @@
   content: "";
   padding: 0;
 }
+
+.leavereview{
+  float:left;
+  width:45%;
+}
+
+table.reviewstable{
+  float:right;
+  width:45%;
+}
